@@ -110,4 +110,31 @@ class BaselineErrorProneRefasterIntegrationTest extends AbstractPluginTest {
         }
         '''.stripIndent()
     }
+
+    def 'compileJava with refaster transforms simple lambdas into method references'() {
+        when:
+        buildFile << standardBuildFile
+        file('src/main/java/test/Test.java') << '''
+        package test;
+        import java.util.Collections;
+        import java.util.List;
+        import java.util.function.Supplier;
+        public class Test {
+            Supplier<List<String>> value = () -> Collections.emptyList();
+        }
+        '''.stripIndent()
+
+        then:
+        BuildResult result = with('compileJava', '-i', '-PrefasterApply').build()
+        result.task(":compileJava").outcome == TaskOutcome.SUCCESS
+        file('src/main/java/test/Test.java').text == '''
+        package test;
+        import java.util.Collections;
+        import java.util.List;
+        import java.util.function.Supplier;
+        public class Test {
+            Supplier<List<String>> value = Collections::emptyList;
+        }
+        '''.stripIndent()
+    }
 }
