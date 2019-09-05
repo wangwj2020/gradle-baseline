@@ -47,6 +47,16 @@ allprojects {
         sourceCompatibility = 1.8
     }
 
+    tasks.withType(JavaCompile).configureEach {
+        options.errorprone {
+            check("Slf4jLogsafeArgs", net.ltgt.gradle.errorprone.CheckSeverity.OFF)
+            check("PreferSafeLoggableExceptions", net.ltgt.gradle.errorprone.CheckSeverity.OFF)
+            check("PreferSafeLoggingPreconditions", net.ltgt.gradle.errorprone.CheckSeverity.OFF)
+            check("PreconditionsConstantMessage", net.ltgt.gradle.errorprone.CheckSeverity.OFF)
+        }
+    }
+
+
     apply plugin: 'org.inferred.processors'
 
     group = 'com.palantir.baseline'
