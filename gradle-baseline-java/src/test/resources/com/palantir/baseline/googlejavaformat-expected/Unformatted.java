@@ -15,7 +15,8 @@ public final class Unformatted extends TestCase {
 
     public void testFormatter() throws Exception {
         Path inputPath = FileSystems.getDefault()
-                .getPath(TestPath.getDir(),
+                .getPath(
+                        TestPath.getDir(),
                         "input");
         Path outputPath = FileSystems.getDefault()
                 .getPath(
@@ -34,7 +35,8 @@ public final class Unformatted extends TestCase {
                     Charsets.UTF_8);
             byte[] expectedOutputBytes = Files.readAllBytes(
                     FileSystems.getDefault()
-                            .getPath(outputDirectory.toString(),
+                            .getPath(
+                                    outputDirectory.toString(),
                                     fileName));
             String expectedOutputString = new String(expectedOutputBytes, Charsets.UTF_8);
             JavaInput javaInput = new JavaInput(inputString);
@@ -45,9 +47,11 @@ public final class Unformatted extends TestCase {
                     errors.isEmpty());
             Writer stringWriter = new StringWriter();
             RangeSet<Integer> linesFlag = TreeRangeSet.create();
-            linesFlag.add(Range.<
-                    Integer>all());
-            javaOutput.writeMerged(stringWriter,
+            linesFlag.add(
+                    Range.<
+                            Integer>all());
+            javaOutput.writeMerged(
+                    stringWriter,
                     linesFlag,
                     MAX_WIDTH,
                     errors);
