@@ -90,6 +90,7 @@ class BaselineExactDependenciesTest extends AbstractPluginTest {
 
         then:
         BuildResult result = with('checkUnusedDependencies', '--stacktrace').build()
+        System.out.println(result.output)
         result.task(':classes').getOutcome() == TaskOutcome.SUCCESS
         result.task(':checkUnusedDependencies').getOutcome() == TaskOutcome.SUCCESS
     }
