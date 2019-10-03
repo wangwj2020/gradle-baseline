@@ -81,7 +81,11 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                         .contains(dependency.getExtension()))
                 .collect(Collectors.toSet());
 
+        getLogger().lifecycle("Ignored before: {}", ignore.get());
+
         excludeSourceOnlyDependencies();
+
+        getLogger().lifecycle("Ignored after: {}", ignore.get());
 
         Set<ResolvedArtifact> possiblyUnused = Sets.difference(declaredArtifacts, necessaryArtifacts);
         getLogger().debug("Possibly unused dependencies: {}",
@@ -143,7 +147,7 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
 
     private void ignoreDependency(Configuration config, ModuleVersionIdentifier id) {
         String dependencyId = BaselineExactDependencies.asString(id);
-        getLogger().info("Ignoring {} dependency: '{}'", config.getName(), dependencyId);
+        getLogger().lifecycle("Ignoring {} dependency: '{}'", config.getName(), dependencyId);
         ignore.add(dependencyId);
     }
 
