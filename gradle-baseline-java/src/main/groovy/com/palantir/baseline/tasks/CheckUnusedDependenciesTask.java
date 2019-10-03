@@ -81,10 +81,14 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                         .contains(dependency.getExtension()))
                 .collect(Collectors.toSet());
 
+        getLogger().error("Ignored dependencies before: {} {}", ignore.get());
+
         excludeSourceOnlyDependencies();
 
+        getLogger().error("Ignored dependencies after: {} {}", ignore.get());
+
         Set<ResolvedArtifact> possiblyUnused = Sets.difference(declaredArtifacts, necessaryArtifacts);
-        getLogger().debug("Possibly unused dependencies: {}",
+        getLogger().error("Possibly unused dependencies: {}",
                 possiblyUnused.stream()
                         .map(BaselineExactDependencies::asString)
                         .collect(Collectors.toList()));
@@ -92,6 +96,10 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                 .filter(artifact -> !shouldIgnore(artifact))
                 .sorted(Comparator.comparing(artifact -> artifact.getId().getDisplayName()))
                 .collect(Collectors.toList());
+        getLogger().error("Declared but unused dependencies: {}",
+                declaredButUnused.stream()
+                        .map(BaselineExactDependencies::asString)
+                        .collect(Collectors.toList()));
         if (!declaredButUnused.isEmpty()) {
             // TODO(dfox): don't print warnings for jars that define service loaded classes (e.g. meta-inf)
             StringBuilder sb = new StringBuilder();
@@ -143,7 +151,7 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
 
     private void ignoreDependency(Configuration config, ModuleVersionIdentifier id) {
         String dependencyId = BaselineExactDependencies.asString(id);
-        getLogger().info("Ignoring {} dependency: '{}'", config.getName(), dependencyId);
+        getLogger().error("Ignoring {} dependency: '{}'", config.getName(), dependencyId);
         ignore.add(dependencyId);
     }
 
@@ -159,7 +167,9 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
     }
 
     private boolean shouldIgnore(ResolvedArtifact artifact) {
-        return ignore.get().contains(asString(artifact));
+        boolean shouldIgnore = ignore.get().contains(asString(artifact));
+        getLogger().error("Test ignore: '{}' -> {}", asString(artifact), shouldIgnore);
+        return shouldIgnore;
     }
 
     private static String asString(ResolvedArtifact artifact) {

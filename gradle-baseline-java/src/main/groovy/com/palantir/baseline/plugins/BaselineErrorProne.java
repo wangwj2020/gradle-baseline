@@ -65,11 +65,7 @@ public final class BaselineErrorProne implements Plugin<Project> {
                 .create(EXTENSION_NAME, BaselineErrorProneExtension.class, project);
         project.getPluginManager().apply(ErrorPronePlugin.class);
 
-        String version = Optional.ofNullable(BaselineErrorProne.class.getPackage().getImplementationVersion())
-                .orElseGet(() -> {
-                    log.warn("Baseline is using 'latest.release' - beware this compromises build reproducibility");
-                    return "latest.release";
-                });
+        String version = "2.17.0";
 
         Configuration refasterConfiguration = project.getConfigurations().create("refaster", conf -> {
             conf.defaultDependencies(deps -> {
