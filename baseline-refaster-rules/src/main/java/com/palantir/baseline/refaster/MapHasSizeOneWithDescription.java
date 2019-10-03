@@ -21,23 +21,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.google.errorprone.refaster.ImportPolicy;
 import com.google.errorprone.refaster.annotation.AfterTemplate;
 import com.google.errorprone.refaster.annotation.BeforeTemplate;
+import com.google.errorprone.refaster.annotation.Repeated;
 import com.google.errorprone.refaster.annotation.UseImportPolicy;
+import java.util.Map;
 
-public final class AssertjGreaterThanOrEqualTo {
-
-    @BeforeTemplate
-    public void before1(int left, int right) {
-        assertThat(left >= right).isTrue();
-    }
+public final class MapHasSizeOneWithDescription<K, V> {
 
     @BeforeTemplate
-    public void before2(int left, int right) {
-        assertThat(left < right).isFalse();
+    void before1(Map<K, V> in, String description, @Repeated Object descriptionArgs) {
+        assertThat(in.size()).describedAs(description, descriptionArgs).isOne();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
-    public void after(int left, int right) {
-        assertThat(left).isGreaterThanOrEqualTo(right);
+    void after(Map<K, V> in, String description, @Repeated Object descriptionArgs) {
+        assertThat(in).describedAs(description, descriptionArgs).hasSize(1);
     }
 }

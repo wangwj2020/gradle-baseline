@@ -22,22 +22,18 @@ import com.google.errorprone.refaster.ImportPolicy;
 import com.google.errorprone.refaster.annotation.AfterTemplate;
 import com.google.errorprone.refaster.annotation.BeforeTemplate;
 import com.google.errorprone.refaster.annotation.UseImportPolicy;
+import java.util.Map;
 
-public final class AssertjStringDoesNotContain {
-
-    @BeforeTemplate
-    void before1(String input, CharSequence contains) {
-        assertThat(input.contains(contains)).isFalse();
-    }
+public final class MapHasSizeOne<K, V> {
 
     @BeforeTemplate
-    void before2(String input, CharSequence contains) {
-        assertThat(!input.contains(contains)).isTrue();
+    void before1(Map<K, V> in) {
+        assertThat(in.size()).isOne();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
-    void after(String input, CharSequence contains) {
-        assertThat(input).doesNotContain(contains);
+    void after(Map<K, V> in) {
+        assertThat(in).hasSize(1);
     }
 }
