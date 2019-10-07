@@ -1,0 +1,17 @@
+apply plugin: 'nebula.maven-publish'
+apply plugin: 'nebula.source-jar'
+apply plugin: 'java-library'
+apply from: "${rootDir}/gradle/publish-jar.gradle"
+
+dependencies {
+    implementation 'com.google.errorprone:error_prone_refaster'
+    implementation 'org.assertj:assertj-core'
+
+    testImplementation project(':baseline-refaster-testing')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+sourceCompatibility = 11
+// Do not apply refaster rules
+tasks.compileRefaster.enabled = false
+tasks.compileJava.onlyIf { project.properties.refasterApply == null }
