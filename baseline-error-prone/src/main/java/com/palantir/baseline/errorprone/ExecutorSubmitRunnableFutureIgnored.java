@@ -22,11 +22,16 @@ import com.google.errorprone.VisitorState;
 import com.google.errorprone.bugpatterns.AbstractReturnValueIgnored;
 import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.fixes.SuggestedFixes;
+import com.google.errorprone.matchers.ChildMultiMatcher;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.Matcher;
+import com.google.errorprone.matchers.Matchers;
 import com.google.errorprone.matchers.method.MethodMatchers;
 import com.sun.source.tree.ExpressionTree;
+import com.sun.source.tree.LambdaExpressionTree;
+import com.sun.source.tree.MemberReferenceTree;
 import com.sun.source.tree.MethodInvocationTree;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 @AutoService(BugChecker.class)
@@ -42,10 +47,33 @@ import java.util.concurrent.ExecutorService;
                 + "failures are recorded.")
 public final class ExecutorSubmitRunnableFutureIgnored extends AbstractReturnValueIgnored {
 
-    private static final Matcher<ExpressionTree> MATCHER = MethodMatchers.instanceMethod()
+    private static final Matcher<ExpressionTree> SUBMIT_RUNNABLE = MethodMatchers.instanceMethod()
             .onDescendantOf(ExecutorService.class.getName())
             .named("submit")
             .withParameters(Runnable.class.getName());
+
+    private static final Matcher<ExpressionTree> SUBMIT_AMBIGUOUS_CALLABLE = Matchers.methodInvocation(
+            MethodMatchers.instanceMethod()
+                    .onDescendantOf(ExecutorService.class.getName())
+                    .named("submit")
+                    .withParameters(Callable.class.getName()),
+            // Only one parameter, so any of the current MatchTypes will do
+            ChildMultiMatcher.MatchType.ALL,
+            (Matcher<ExpressionTree>) (tree, state) -> {
+                // Expression lambdas don't have an explicit return statement, and can function as runnables
+                if (tree instanceof LambdaExpressionTree) {
+                    LambdaExpressionTree lambdaExpressionTree = (LambdaExpressionTree) tree;
+                    return lambdaExpressionTree.getBodyKind() == LambdaExpressionTree.BodyKind.EXPRESSION;
+                }
+                // Method references are ambiguous as well, e.g. executor.submit(this::function)
+                if (tree instanceof MemberReferenceTree) {
+                    MemberReferenceTree memberReferenceTree = (MemberReferenceTree) tree;
+                    return memberReferenceTree.getMode() == MemberReferenceTree.ReferenceMode.INVOKE;
+                }
+                return false;
+            });
+
+    private static final Matcher<ExpressionTree> MATCHER = Matchers.anyOf(SUBMIT_RUNNABLE, SUBMIT_AMBIGUOUS_CALLABLE);
 
     @Override
     public Matcher<? super ExpressionTree> specializedMatcher() {

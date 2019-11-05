@@ -33,6 +33,11 @@ class ExecutorSubmitRunnableFutureIgnoredTest {
                         "class Test {",
                         "   void f(ExecutorService exec) {",
                         "       exec.submit(() -> System.out.println(\"Hello\"));",
+                        "       exec.submit(() -> methodCall());",
+                        "       exec.submit(this::methodCall);",
+                        "   }",
+                        "   int methodCall() {",
+                        "       return 1;",
                         "   }",
                         "}")
                 .addOutputLines(
@@ -41,6 +46,11 @@ class ExecutorSubmitRunnableFutureIgnoredTest {
                         "class Test {",
                         "   void f(ExecutorService exec) {",
                         "       exec.execute(() -> System.out.println(\"Hello\"));",
+                        "       exec.execute(() -> methodCall());",
+                        "       exec.execute(this::methodCall);",
+                        "   }",
+                        "   int methodCall() {",
+                        "       return 1;",
                         "   }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -55,6 +65,10 @@ class ExecutorSubmitRunnableFutureIgnoredTest {
                 "class Test {",
                 "   void f(ExecutorService exec) {",
                 "       Future<?> future = exec.submit(() -> System.out.println(\"Hello\"));",
+                "       exec.submit(() -> { return methodCall(); });",
+                "   }",
+                "   int methodCall() {",
+                "       return 1;",
                 "   }",
                 "}").doTest();
     }
