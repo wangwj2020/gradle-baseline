@@ -22,6 +22,7 @@ import com.google.errorprone.VisitorState;
 import com.google.errorprone.bugpatterns.BugChecker;
 import com.google.errorprone.matchers.Description;
 import com.google.errorprone.matchers.Matcher;
+import com.google.errorprone.matchers.Matchers;
 import com.google.errorprone.matchers.method.MethodMatchers;
 import com.google.errorprone.util.ASTHelpers;
 import com.sun.source.tree.ExpressionTree;
@@ -55,14 +56,28 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
             .named("containsKey")
             .withParameters(Object.class.getName());
 
+    private static final Matcher<ExpressionTree> mapRemove = MethodMatchers.instanceMethod()
+            .onDescendantOf(MAP)
+            .named("remove")
+            .withParameters(Object.class.getName());
+
     private static final Matcher<ExpressionTree> collectionContains = MethodMatchers.instanceMethod()
             .onDescendantOf(COLLECTION)
             .named("contains")
             .withParameters(Object.class.getName());
 
+    private static final Matcher<ExpressionTree> collectionRemove = MethodMatchers.instanceMethod()
+            .onDescendantOf(COLLECTION)
+            .named("remove")
+            .withParameters(Object.class.getName());
+
+    private static final Matcher<ExpressionTree> mapMatcher = Matchers.anyOf(mapGet, mapContainsKey, mapRemove);
+    private static final Matcher<ExpressionTree> collectionMatcher =
+            Matchers.anyOf(collectionContains, collectionRemove);
+
     @Override
     public Description matchMethodInvocation(MethodInvocationTree tree, VisitorState state) {
-        if (mapGet.matches(tree, state) || mapContainsKey.matches(tree, state)) {
+        if (mapMatcher.matches(tree, state)) {
             Type mapType = getTargetTypeAsSuper(tree, MAP, state);
             if (mapType == null) {
                 return Description.NO_MATCH;
@@ -76,7 +91,7 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
                 return Description.NO_MATCH;
             }
             return describeMatch(tree);
-        } else if (collectionContains.matches(tree, state)) {
+        } else if (collectionMatcher.matches(tree, state)) {
             Type collectionType = getTargetTypeAsSuper(tree, COLLECTION, state);
             if (collectionType == null) {
                 return Description.NO_MATCH;

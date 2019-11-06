@@ -46,6 +46,10 @@ class UnexpectedTypeTest {
                 "       // BUG: Diagnostic contains: wrong type",
                 "       return map.containsKey(key);",
                 "   }",
+                "   String f4(CustomMap map, String key) {",
+                "       // BUG: Diagnostic contains: wrong type",
+                "       return map.remove(key);",
+                "   }",
                 "   interface CustomMap extends Map<Integer, String> {}",
                 "}"
         ).doTest();
@@ -74,6 +78,10 @@ class UnexpectedTypeTest {
                 "   boolean f3(ImmutableMap<Integer, String> in, String key) {",
                 "       // BUG: Diagnostic contains: wrong type",
                 "       return in.keySet().contains(key);",
+                "   }",
+                "   boolean f4(List<Integer> in, String key) {",
+                "       // BUG: Diagnostic contains: wrong type",
+                "       return in.remove(key);",
                 "   }",
                 "   interface Custom extends List<CharSequence> {}",
                 "}"
