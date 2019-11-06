@@ -84,6 +84,9 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
             String superTarget,
             VisitorState state) {
         Type targetMapType = getTargetType(tree);
+        if (targetMapType == null) {
+            return null;
+        }
         Symbol mapSymbol = state.getSymbolFromString(superTarget);
         if (mapSymbol == null) {
             return null;
