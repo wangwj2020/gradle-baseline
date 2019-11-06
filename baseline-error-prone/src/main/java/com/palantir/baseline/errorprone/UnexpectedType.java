@@ -87,7 +87,8 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
             }
             Type keyType = mapType.getTypeArguments().get(0);
             ExpressionTree keyExpression = tree.getArguments().get(0);
-            if (ASTHelpers.isCastable(ASTHelpers.getResultType(keyExpression), keyType, state)) {
+            Type argType = getBoxedResult(keyExpression, state);
+            if (argType == null || state.getTypes().isAssignable(argType, keyType)) {
                 return Description.NO_MATCH;
             }
             return describeMatch(tree);
@@ -101,12 +102,22 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
             }
             Type elementType = collectionType.getTypeArguments().get(0);
             ExpressionTree containsExpression = tree.getArguments().get(0);
-            if (ASTHelpers.isCastable(ASTHelpers.getResultType(containsExpression), elementType, state)) {
+            Type argType = getBoxedResult(containsExpression, state);
+            if (argType == null ||state.getTypes().isAssignable(argType, elementType)) {
                 return Description.NO_MATCH;
             }
             return describeMatch(tree);
         }
         return Description.NO_MATCH;
+    }
+
+    @Nullable
+    private static Type getBoxedResult(ExpressionTree expressionTree, VisitorState state) {
+        Type rawType = ASTHelpers.getResultType(expressionTree);
+        if (rawType == null) {
+            return null;
+        }
+        return state.getTypes().boxedTypeOrType(rawType);
     }
 
     @Nullable

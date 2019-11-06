@@ -83,6 +83,10 @@ class UnexpectedTypeTest {
                 "       // BUG: Diagnostic contains: wrong type",
                 "       return in.remove(key);",
                 "   }",
+                "   boolean f4(List<Integer> in) {",
+                "       // BUG: Diagnostic contains: wrong type",
+                "       return in.remove(5L);",
+                "   }",
                 "   interface Custom extends List<CharSequence> {}",
                 "}"
         ).doTest();
@@ -107,10 +111,6 @@ class UnexpectedTypeTest {
                 "Test.java",
                 "import java.util.Map;",
                 "class Test {",
-                "   String f0(Map<String, String> map, Object key) {",
-                // This is suspicious, but isn't impossible
-                "       return map.get(key);",
-                "   }",
                 // Not recommended, but should not fail
                 "   Object f1(Map map, String key) {",
                 "       return map.get(key);",
