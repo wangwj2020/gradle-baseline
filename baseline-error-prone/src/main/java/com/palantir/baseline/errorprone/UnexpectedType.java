@@ -43,8 +43,9 @@ import javax.annotation.Nullable;
         summary = "Likely programming error due to using the wrong type in a method that accepts Object.")
 public final class UnexpectedType extends BugChecker implements BugChecker.MethodInvocationTreeMatcher {
 
-    private static final String MAP = Map.class.getName();
     private static final String COLLECTION = Collection.class.getName();
+    private static final String MAP = Map.class.getName();
+    private static final String OBJECT = Object.class.getName();
 
     private static final Matcher<ExpressionTree> mapGet = MethodMatchers.instanceMethod()
             .onDescendantOf(Map.class.getName())
@@ -78,37 +79,53 @@ public final class UnexpectedType extends BugChecker implements BugChecker.Metho
     @Override
     public Description matchMethodInvocation(MethodInvocationTree tree, VisitorState state) {
         if (mapMatcher.matches(tree, state)) {
-            Type mapType = getTargetTypeAsSuper(tree, MAP, state);
-            if (mapType == null) {
-                return Description.NO_MATCH;
-            }
-            if (mapType.getTypeArguments().size() != 2) {
-                return Description.NO_MATCH;
-            }
-            Type keyType = mapType.getTypeArguments().get(0);
-            ExpressionTree keyExpression = tree.getArguments().get(0);
-            Type argType = getBoxedResult(keyExpression, state);
-            if (argType == null || state.getTypes().isAssignable(argType, keyType)) {
-                return Description.NO_MATCH;
-            }
-            return describeMatch(tree);
+            return checkMap(tree, state);
         } else if (collectionMatcher.matches(tree, state)) {
-            Type collectionType = getTargetTypeAsSuper(tree, COLLECTION, state);
-            if (collectionType == null) {
-                return Description.NO_MATCH;
-            }
-            if (collectionType.getTypeArguments().size() != 1) {
-                return Description.NO_MATCH;
-            }
-            Type elementType = collectionType.getTypeArguments().get(0);
-            ExpressionTree containsExpression = tree.getArguments().get(0);
-            Type argType = getBoxedResult(containsExpression, state);
-            if (argType == null ||state.getTypes().isAssignable(argType, elementType)) {
-                return Description.NO_MATCH;
-            }
-            return describeMatch(tree);
+            return checkCollection(tree, state);
         }
         return Description.NO_MATCH;
+    }
+
+    private Description checkMap(MethodInvocationTree tree, VisitorState state) {
+        Type mapType = getTargetTypeAsSuper(tree, MAP, state);
+        if (mapType == null) {
+            return Description.NO_MATCH;
+        }
+        if (mapType.getTypeArguments().size() != 2) {
+            return Description.NO_MATCH;
+        }
+        Type keyType = mapType.getTypeArguments().get(0);
+        ExpressionTree keyExpression = tree.getArguments().get(0);
+        Type argType = getBoxedResult(keyExpression, state);
+        if (argType == null || state.getTypes().isAssignable(argType, keyType)) {
+            return Description.NO_MATCH;
+        }
+        // Allow 'Object' to avoid creating noise on delegation
+        if (ASTHelpers.isSameType(argType, state.getTypeFromString(OBJECT), state)) {
+            return Description.NO_MATCH;
+        }
+        return describeMatch(tree);
+    }
+
+    private Description checkCollection(MethodInvocationTree tree, VisitorState state) {
+        Type collectionType = getTargetTypeAsSuper(tree, COLLECTION, state);
+        if (collectionType == null) {
+            return Description.NO_MATCH;
+        }
+        if (collectionType.getTypeArguments().size() != 1) {
+            return Description.NO_MATCH;
+        }
+        Type elementType = collectionType.getTypeArguments().get(0);
+        ExpressionTree containsExpression = tree.getArguments().get(0);
+        Type argType = getBoxedResult(containsExpression, state);
+        if (argType == null || state.getTypes().isAssignable(argType, elementType)) {
+            return Description.NO_MATCH;
+        }
+        // Allow 'Object' to avoid creating noise on delegation
+        if (ASTHelpers.isSameType(argType, state.getTypeFromString(OBJECT), state)) {
+            return Description.NO_MATCH;
+        }
+        return describeMatch(tree);
     }
 
     @Nullable
