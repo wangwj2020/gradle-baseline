@@ -22,7 +22,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 @Execution(ExecutionMode.CONCURRENT)
-class UnexpectedTypeTest {
+class StrictCollectionIncompatibleTypeTest {
 
     @Test
     void testUnexpectedType_map() {
@@ -31,23 +31,23 @@ class UnexpectedTypeTest {
                 "import java.util.Map;",
                 "class Test {",
                 "   String f0(Map<Integer, String> map, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return map.get(key);",
                 "   }",
                 "   boolean f1(Map<Integer, String> map, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return map.containsKey(key);",
                 "   }",
                 "   String f2(CustomMap map, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return map.get(key);",
                 "   }",
                 "   boolean f3(CustomMap map, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return map.containsKey(key);",
                 "   }",
                 "   String f4(CustomMap map, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return map.remove(key);",
                 "   }",
                 "   interface CustomMap extends Map<Integer, String> {}",
@@ -64,27 +64,27 @@ class UnexpectedTypeTest {
                 "import com.google.common.collect.ImmutableMap;",
                 "class Test {",
                 "   boolean f0(Collection<Integer> in, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.contains(key);",
                 "   }",
                 "   boolean f1(List<Integer> in, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.contains(key);",
                 "   }",
                 "   boolean f2(Custom in, Integer key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.contains(key);",
                 "   }",
                 "   boolean f3(ImmutableMap<Integer, String> in, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.keySet().contains(key);",
                 "   }",
                 "   boolean f4(List<Integer> in, String key) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.remove(key);",
                 "   }",
                 "   boolean f4(List<Integer> in) {",
-                "       // BUG: Diagnostic contains: wrong type",
+                "       // BUG: Diagnostic contains: incompatible types",
                 "       return in.remove(5L);",
                 "   }",
                 "   interface Custom extends List<CharSequence> {}",
@@ -98,8 +98,14 @@ class UnexpectedTypeTest {
                 "Test.java",
                 "import java.util.Collection;",
                 "class Test {",
-                "   boolean f(Collection<Integer> in) {",
-                "     return in.contains(null) || in.contains(3);",
+                "   boolean f0(Collection<Integer> in) {",
+                "     return in.contains(null);",
+                "   }",
+                "   boolean f1(Collection<Integer> in) {",
+                "     return in.contains(3);",
+                "   }",
+                "   boolean f2(Collection<Class<? extends CharSequence>> in, Class<?> clazz) {",
+                "     return in.contains(clazz);",
                 "   }",
                 "}"
         ).doTest();
@@ -120,6 +126,6 @@ class UnexpectedTypeTest {
     }
 
     private CompilationTestHelper helper() {
-        return CompilationTestHelper.newInstance(UnexpectedType.class, getClass());
+        return CompilationTestHelper.newInstance(StrictCollectionIncompatibleType.class, getClass());
     }
 }
