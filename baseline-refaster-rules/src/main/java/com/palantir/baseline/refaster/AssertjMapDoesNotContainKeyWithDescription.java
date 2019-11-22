@@ -29,23 +29,23 @@ public final class AssertjMapDoesNotContainKeyWithDescription<K, V> {
 
     @BeforeTemplate
     void before1(Map<K, V> things, K key, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.containsKey(key)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(things.containsKey(key)).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void before2(Map<K, V> things, K key, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.get(key)).describedAs(description, descriptionArgs).isNull();
+        assertThat(things.get(key)).as(description, descriptionArgs).isNull();
     }
 
     @BeforeTemplate
     @SuppressWarnings("RedundantCollectionOperation") // It's what we're fixing
     void before3(Map<K, V> things, K key, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.keySet().contains(key)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(things.keySet().contains(key)).as(description, descriptionArgs).isFalse();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Map<K, V> things, K key, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).doesNotContainKey(key);
+        assertThat(things).as(description, descriptionArgs).doesNotContainKey(key);
     }
 }

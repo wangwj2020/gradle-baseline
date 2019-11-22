@@ -29,12 +29,12 @@ public final class AssertjInstanceOfWithDescription<T, E> {
 
     @BeforeTemplate
     void before(T input, String description, @Repeated Object descriptionArgs) {
-        assertThat(Refaster.<E>isInstance(input)).describedAs(description, descriptionArgs).isTrue();
+        assertThat(Refaster.<E>isInstance(input)).as(description, descriptionArgs).isTrue();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(T input, String description, @Repeated Object descriptionArgs) {
-        assertThat(input).describedAs(description, descriptionArgs).isInstanceOf(Refaster.<E>clazz());
+        assertThat(input).as(description, descriptionArgs).isInstanceOf(Refaster.<E>clazz());
     }
 }

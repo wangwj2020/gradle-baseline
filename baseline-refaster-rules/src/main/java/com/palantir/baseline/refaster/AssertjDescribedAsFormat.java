@@ -24,12 +24,18 @@ import org.assertj.core.api.Descriptable;
 public final class AssertjDescribedAsFormat<T extends Descriptable<T>> {
 
     @BeforeTemplate
-    public T before(T assertion, String format, @Repeated Object formatArgs) {
+    public T before1(T assertion, String format, @Repeated Object formatArgs) {
+        return assertion.as(String.format(format, formatArgs));
+    }
+
+    @BeforeTemplate
+    public T before2(T assertion, String format, @Repeated Object formatArgs) {
+        // 'describedAs' is an alias to 'as'
         return assertion.describedAs(String.format(format, formatArgs));
     }
 
     @AfterTemplate
     public T after(T assertion, String format, @Repeated Object formatArgs) {
-        return assertion.describedAs(format, formatArgs);
+        return assertion.as(format, formatArgs);
     }
 }

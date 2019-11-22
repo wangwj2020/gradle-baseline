@@ -248,28 +248,28 @@ public final class PreferAssertj
         }
         if (ASSERT_TRUE_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
-                    fix.replace(tree, assertThat + ".describedAs(" + argSource(tree, state, 0) + ").isTrue()"));
+                    fix.replace(tree, assertThat + ".as(" + argSource(tree, state, 0) + ").isTrue()"));
         }
         if (ASSERT_FALSE.matches(tree, state)) {
             return withAssertThat(tree, state, 0, (assertThat, fix) -> fix.replace(tree, assertThat + ".isFalse()"));
         }
         if (ASSERT_FALSE_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
-                    fix.replace(tree, assertThat + ".describedAs(" + argSource(tree, state, 0) + ").isFalse()"));
+                    fix.replace(tree, assertThat + ".as(" + argSource(tree, state, 0) + ").isFalse()"));
         }
         if (ASSERT_NULL.matches(tree, state)) {
             return withAssertThat(tree, state, 0, (assertThat, fix) -> fix.replace(tree, assertThat + ".isNull()"));
         }
         if (ASSERT_NULL_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
-                    fix.replace(tree, assertThat + ".describedAs(" + argSource(tree, state, 0) + ").isNull()"));
+                    fix.replace(tree, assertThat + ".as(" + argSource(tree, state, 0) + ").isNull()"));
         }
         if (ASSERT_NOT_NULL.matches(tree, state)) {
             return withAssertThat(tree, state, 0, (assertThat, fix) -> fix.replace(tree, assertThat + ".isNotNull()"));
         }
         if (ASSERT_NOT_NULL_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
-                    fix.replace(tree, assertThat + ".describedAs(" + argSource(tree, state, 0) + ").isNotNull()"));
+                    fix.replace(tree, assertThat + ".as(" + argSource(tree, state, 0) + ").isNotNull()"));
         }
         if (ASSERT_SAME.matches(tree, state)) {
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
@@ -278,7 +278,7 @@ public final class PreferAssertj
         if (ASSERT_SAME_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 2, (assertThat, fix) ->
                     fix.replace(tree, assertThat
-                            + ".describedAs(" + argSource(tree, state, 0) + ").isSameAs("
+                            + ".as(" + argSource(tree, state, 0) + ").isSameAs("
                             + argSource(tree, state, 1) + ")"));
         }
         if (ASSERT_NOT_SAME.matches(tree, state)) {
@@ -288,7 +288,7 @@ public final class PreferAssertj
         if (ASSERT_NOT_SAME_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 2, (assertThat, fix) ->
                     fix.replace(tree, assertThat
-                            + ".describedAs(" + argSource(tree, state, 0) + ").isNotSameAs("
+                            + ".as(" + argSource(tree, state, 0) + ").isNotSameAs("
                             + argSource(tree, state, 1) + ")"));
         }
         if (FAIL_DESCRIPTION.matches(tree, state) || FAIL.matches(tree, state)) {
@@ -316,7 +316,7 @@ public final class PreferAssertj
         if (ASSERT_EQUALS_FLOATING_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 2, (assertThat, fix) -> fix
                     .addStaticImport("org.assertj.core.api.Assertions.within")
-                    .replace(tree, String.format("%s.describedAs(%s)%s",
+                    .replace(tree, String.format("%s.as(%s)%s",
                             assertThat,
                             argSource(tree, state, 0),
                             isConstantZero(tree.getArguments().get(3))
@@ -337,7 +337,7 @@ public final class PreferAssertj
         if (ASSERT_NOT_EQUALS_FLOATING_DESCRIPTION.matches(tree, state)) {
             return withAssertThat(tree, state, 2, (assertThat, fix) -> fix
                     .addStaticImport("org.assertj.core.api.Assertions.within")
-                    .replace(tree, String.format("%s.describedAs(%s)%s",
+                    .replace(tree, String.format("%s.as(%s)%s",
                             assertThat,
                             argSource(tree, state, 0),
                             isConstantZero(tree.getArguments().get(3))
@@ -361,7 +361,7 @@ public final class PreferAssertj
                     .accept(HamcrestVisitor.INSTANCE, state);
             return withAssertThat(tree, state, 1, (assertThat, fix) ->
                     fix.replace(tree, assertThat
-                            + ".describedAs(" + argSource(tree, state, 0) + ")"
+                            + ".as(" + argSource(tree, state, 0) + ")"
                             + replacement.orElseGet(() -> ".is(new "
                             + SuggestedFixes.qualifyType(state, fix, "org.assertj.core.api.HamcrestCondition")
                             + "<>(" + argSource(tree, state, 2) + "))")));
@@ -378,7 +378,7 @@ public final class PreferAssertj
                     state)) {
                 return withAssertThat(tree, state, 2, (assertThat, fix) ->
                         fix.replace(tree, assertThat
-                                + ".describedAs(" + argSource(tree, state, 0) + ").isEqualTo("
+                                + ".as(" + argSource(tree, state, 0) + ").isEqualTo("
                                 + argSource(tree, state, 1) + ")"));
             } else if (parameters == 3 && isFloatingPointArrayEqualsWithZeroDelta(tree, state)) {
                 return withAssertThat(tree, state, 1, (assertThat, fix) ->
@@ -387,7 +387,7 @@ public final class PreferAssertj
             } else if (parameters == 4 && isFloatingPointArrayEqualsWithZeroDelta(tree, state)) {
                 return withAssertThat(tree, state, 2, (assertThat, fix) ->
                         fix.replace(tree, assertThat
-                                + ".describedAs(" + argSource(tree, state, 0) + ").isEqualTo("
+                                + ".as(" + argSource(tree, state, 0) + ").isEqualTo("
                                 + argSource(tree, state, 1) + ")"));
             } else {
                 // Does not fix assertArrayEquals(double[], double[], double)
@@ -407,7 +407,7 @@ public final class PreferAssertj
                     state)) {
                 return withAssertThat(tree, state, 2, (assertThat, fix) ->
                         fix.replace(tree, assertThat
-                                + ".describedAs(" + argSource(tree, state, 0) + ").isNotEqualTo("
+                                + ".as(" + argSource(tree, state, 0) + ").isNotEqualTo("
                                 + argSource(tree, state, 1) + ")"));
             } else {
                 // I'm not aware of anything that should hit this.
@@ -434,7 +434,7 @@ public final class PreferAssertj
                 .build();
     }
 
-    /** Returns the describedAs invocation if a detail is present, otherwise an empty string. */
+    /** Returns the 'as' invocation if a detail is present, otherwise an empty string. */
     private static String getAssertDescription(@Nullable ExpressionTree detail, VisitorState state) {
         if (detail == null) {
             return "";
@@ -445,10 +445,10 @@ public final class PreferAssertj
         }
         if (state.getTypes().isAssignable(
                 ASTHelpers.getResultType(detail), state.getTypeFromString(String.class.getName()))) {
-            return ".describedAs(" + detailSource + ')';
+            return ".as(" + detailSource + ')';
         }
         // Lazily allow the value to be evaluated on failures
-        return ".describedAs(\"%s\", " + detailSource + ')';
+        return ".as(\"%s\", " + detailSource + ')';
     }
 
     /**

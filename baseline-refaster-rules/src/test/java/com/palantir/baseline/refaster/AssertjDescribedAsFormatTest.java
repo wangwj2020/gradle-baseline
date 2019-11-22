@@ -25,7 +25,7 @@ public class AssertjDescribedAsFormatTest {
     @Test
     public void test() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjDescribedAsFormat.class)
@@ -36,8 +36,10 @@ public class AssertjDescribedAsFormatTest {
                         "public class Test {",
                         "  void f(Object obj) {",
                         "    assertThat(obj).isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(String.format(\"desc %s\", \"arg\")).isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(format(\"desc %s\", \"arg\")).isEqualTo(\"foo\");",
                         "    assertThat(obj).describedAs(String.format(\"desc %s\", \"arg\")).isEqualTo(\"foo\");",
                         "    assertThat(obj).describedAs(format(\"desc %s\", \"arg\")).isEqualTo(\"foo\");",
                         "  }",
@@ -48,10 +50,12 @@ public class AssertjDescribedAsFormatTest {
                         "public class Test {",
                         "  void f(Object obj) {",
                         "    assertThat(obj).isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
                         "  }",
                         "}");
     }

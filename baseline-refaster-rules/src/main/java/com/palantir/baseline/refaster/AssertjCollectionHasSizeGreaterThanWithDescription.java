@@ -29,17 +29,17 @@ public final class AssertjCollectionHasSizeGreaterThanWithDescription<T> {
 
     @BeforeTemplate
     void before1(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() > size).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.size() > size).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before2(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isGreaterThan(size);
+        assertThat(things.size()).as(description, descriptionArgs).isGreaterThan(size);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).hasSizeGreaterThan(size);
+        assertThat(things).as(description, descriptionArgs).hasSizeGreaterThan(size);
     }
 }

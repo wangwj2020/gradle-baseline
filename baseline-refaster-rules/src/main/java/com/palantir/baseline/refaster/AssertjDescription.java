@@ -16,30 +16,25 @@
 
 package com.palantir.baseline.refaster;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.google.errorprone.refaster.ImportPolicy;
 import com.google.errorprone.refaster.annotation.AfterTemplate;
 import com.google.errorprone.refaster.annotation.BeforeTemplate;
 import com.google.errorprone.refaster.annotation.Repeated;
-import com.google.errorprone.refaster.annotation.UseImportPolicy;
-import java.util.Map;
+import org.assertj.core.api.Descriptable;
 
-public final class AssertjMapHasSizeExactlyWithDescription<K, V> {
+/**
+ * Prefer assertj succinct {@link Descriptable#as} over {@link Descriptable#describedAs}.
+ * {@link Descriptable#describedAs} documentation mentions that this method is an alias to
+ * {@link Descriptable#as} for groovy where <code>as</code> is a reserved word.
+ */
+class AssertjDescription {
 
     @BeforeTemplate
-    void before1(Map<K, V> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() == size).as(description, descriptionArgs).isTrue();
-    }
-
-    @BeforeTemplate
-    void before2(Map<K, V> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).as(description, descriptionArgs).isEqualTo(size);
+    <T extends Descriptable<T>> T before(T input, String description, @Repeated Object descriptionArgs) {
+        return input.describedAs(description, descriptionArgs);
     }
 
     @AfterTemplate
-    @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
-    void after(Map<K, V> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).as(description, descriptionArgs).hasSize(size);
+    <T extends Descriptable<T>> T after(T input, String description, @Repeated Object descriptionArgs) {
+        return input.as(description, descriptionArgs);
     }
 }

@@ -29,27 +29,27 @@ public final class AssertjCollectionIsEmptyWithDescription<T> {
 
     @BeforeTemplate
     void bad1(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() == 0).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.size() == 0).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void bad2(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.isEmpty()).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.isEmpty()).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void bad3(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isZero();
+        assertThat(things.size()).as(description, descriptionArgs).isZero();
     }
 
     @BeforeTemplate
     void bad4(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isEqualTo(0);
+        assertThat(things.size()).as(description, descriptionArgs).isEqualTo(0);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Iterable<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isEmpty();
+        assertThat(things).as(description, descriptionArgs).isEmpty();
     }
 }

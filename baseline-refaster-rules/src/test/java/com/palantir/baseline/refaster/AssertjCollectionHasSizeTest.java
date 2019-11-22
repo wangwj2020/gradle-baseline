@@ -57,8 +57,8 @@ public class AssertjCollectionHasSizeTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in.size() == 2).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.size()).describedAs(\"desc\").isEqualTo(2);",
+                        "    assertThat(in.size() == 2).as(\"desc\").isTrue();",
+                        "    assertThat(in.size()).as(\"desc\").isEqualTo(2);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -68,8 +68,8 @@ public class AssertjCollectionHasSizeTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in).describedAs(\"desc\").hasSize(2);",
-                        "    assertThat(in).describedAs(\"desc\").hasSize(2);",
+                        "    assertThat(in).as(\"desc\").hasSize(2);",
+                        "    assertThat(in).as(\"desc\").hasSize(2);",
                         "  }",
                         "}");
     }
@@ -109,8 +109,8 @@ public class AssertjCollectionHasSizeTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in.size() > 2).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.size()).describedAs(\"desc\").isGreaterThan(2);",
+                        "    assertThat(in.size() > 2).as(\"desc\").isTrue();",
+                        "    assertThat(in.size()).as(\"desc\").isGreaterThan(2);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -118,8 +118,8 @@ public class AssertjCollectionHasSizeTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in).describedAs(\"desc\").hasSizeGreaterThan(2);",
-                        "    assertThat(in).describedAs(\"desc\").hasSizeGreaterThan(2);",
+                        "    assertThat(in).as(\"desc\").hasSizeGreaterThan(2);",
+                        "    assertThat(in).as(\"desc\").hasSizeGreaterThan(2);",
                         "  }",
                         "}");
     }

@@ -35,8 +35,8 @@ public final class AssertjOptionalHasValueRedundantWithDescription<T> {
             @Repeated Object descriptionArgs1,
             String description2,
             @Repeated Object descriptionArgs2) {
-        assertThat(optional).describedAs(description1, descriptionArgs1).isPresent();
-        assertThat(optional).describedAs(description2, descriptionArgs2).hasValue(innerValue);
+        assertThat(optional).as(description1, descriptionArgs1).isPresent();
+        assertThat(optional).as(description2, descriptionArgs2).hasValue(innerValue);
     }
 
     @AfterTemplate
@@ -49,6 +49,6 @@ public final class AssertjOptionalHasValueRedundantWithDescription<T> {
             @Repeated Object _descriptionArgs1,
             String description2,
             @Repeated Object descriptionArgs2) {
-        assertThat(optional).describedAs(description2, descriptionArgs2).hasValue(innerValue);
+        assertThat(optional).as(description2, descriptionArgs2).hasValue(innerValue);
     }
 }

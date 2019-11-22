@@ -58,8 +58,8 @@ public class AssertjInstanceOfTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in, Object obj) {",
-                        "    assertThat(in instanceof ImmutableList).describedAs(\"desc\").isTrue();",
-                        "    assertThat(obj instanceof String).describedAs(\"desc\").isTrue();",
+                        "    assertThat(in instanceof ImmutableList).as(\"desc\").isTrue();",
+                        "    assertThat(obj instanceof String).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -68,8 +68,8 @@ public class AssertjInstanceOfTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in, Object obj) {",
-                        "    assertThat(in).describedAs(\"desc\").isInstanceOf(ImmutableList.class);",
-                        "    assertThat(obj).describedAs(\"desc\").isInstanceOf(String.class);",
+                        "    assertThat(in).as(\"desc\").isInstanceOf(ImmutableList.class);",
+                        "    assertThat(obj).as(\"desc\").isInstanceOf(String.class);",
                         "  }",
                         "}");
     }

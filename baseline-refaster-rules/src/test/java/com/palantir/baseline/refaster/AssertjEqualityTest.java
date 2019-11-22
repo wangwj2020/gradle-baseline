@@ -57,9 +57,9 @@ public class AssertjEqualityTest {
                         "import java.util.Objects;",
                         "public class Test {",
                         "  void f(Object obj) {",
-                        "    assertThat(obj.equals(\"foo\")).describedAs(\"desc\").isTrue();",
-                        "    assertThat(!obj.equals(\"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(Objects.equals(obj, \"foo\")).describedAs(\"desc\").isTrue();",
+                        "    assertThat(obj.equals(\"foo\")).as(\"desc\").isTrue();",
+                        "    assertThat(!obj.equals(\"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(Objects.equals(obj, \"foo\")).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -67,9 +67,9 @@ public class AssertjEqualityTest {
                         "import java.util.Objects;",
                         "public class Test {",
                         "  void f(Object obj) {",
-                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
                         "  }",
                         "}");
     }
@@ -113,10 +113,10 @@ public class AssertjEqualityTest {
                         "import java.util.Objects;",
                         "public class Test {",
                         "  void f(Object obj) {",
-                        "    assertThat(obj.equals(\"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(!obj.equals(\"foo\")).describedAs(\"desc\").isTrue();",
-                        "    assertThat(Objects.equals(obj, \"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(!Objects.equals(obj, \"foo\")).describedAs(\"desc\").isTrue();",
+                        "    assertThat(obj.equals(\"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(!obj.equals(\"foo\")).as(\"desc\").isTrue();",
+                        "    assertThat(Objects.equals(obj, \"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(!Objects.equals(obj, \"foo\")).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -124,10 +124,10 @@ public class AssertjEqualityTest {
                         "import java.util.Objects;",
                         "public class Test {",
                         "  void f(Object obj) {",
-                        "    assertThat(obj).describedAs(\"desc\").isNotEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isNotEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isNotEqualTo(\"foo\");",
-                        "    assertThat(obj).describedAs(\"desc\").isNotEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isNotEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isNotEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isNotEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc\").isNotEqualTo(\"foo\");",
                         "  }",
                         "}");
     }

@@ -29,12 +29,12 @@ public final class AssertjMapContainsEntryWithDescription<K, V> {
 
     @BeforeTemplate
     void before(Map<K, V> things, K key, V expectedValue, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.get(key)).describedAs(description, descriptionArgs).isEqualTo(expectedValue);
+        assertThat(things.get(key)).as(description, descriptionArgs).isEqualTo(expectedValue);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Map<K, V> things, K key, V expectedValue, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).containsEntry(key, expectedValue);
+        assertThat(things).as(description, descriptionArgs).containsEntry(key, expectedValue);
     }
 }

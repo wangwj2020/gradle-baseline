@@ -54,13 +54,13 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(boolean b) {",
                         "    assertThat(b).isFalse();",
-                        "    assertThat(b).describedAs(\"desc\").isFalse();",
+                        "    assertThat(b).as(\"desc\").isFalse();",
                         "    assertThat(b).isTrue();",
-                        "    assertThat(b).describedAs(\"desc\").isTrue();",
-                        "    assertThat(b).describedAs(\"desc\").isTrue();",
+                        "    assertThat(b).as(\"desc\").isTrue();",
+                        "    assertThat(b).as(\"desc\").isTrue();",
                         "    assertThat(b).isTrue();",
-                        "    assertThat(b).describedAs(\"desc\").isTrue();",
-                        "    assertThat(b).describedAs(\"%s\", 123).isTrue();",
+                        "    assertThat(b).as(\"desc\").isTrue();",
+                        "    assertThat(b).as(\"%s\", 123).isTrue();",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -117,9 +117,9 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(String s) {",
                         "    assertThat(s).isNull();",
-                        "    assertThat(s).describedAs(\"desc\").isNull();",
+                        "    assertThat(s).as(\"desc\").isNull();",
                         "    assertThat(s).isNotNull();",
-                        "    assertThat(s).describedAs(\"desc\").isNotNull();",
+                        "    assertThat(s).as(\"desc\").isNotNull();",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -148,9 +148,9 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(String a, String b) {",
                         "    assertThat(b).isSameAs(a);",
-                        "    assertThat(b).describedAs(\"desc\").isSameAs(a);",
+                        "    assertThat(b).as(\"desc\").isSameAs(a);",
                         "    assertThat(b).isNotSameAs(a);",
-                        "    assertThat(b).describedAs(\"desc\").isNotSameAs(a);",
+                        "    assertThat(b).as(\"desc\").isNotSameAs(a);",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -224,21 +224,21 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(float fl, double db) {",
                         "    assertThat(fl).isCloseTo(.1f, within(.01f));",
-                        "    assertThat(fl).describedAs(\"desc\").isCloseTo(.1f, within(.01f));",
+                        "    assertThat(fl).as(\"desc\").isCloseTo(.1f, within(.01f));",
                         "    assertThat(db).isCloseTo(.1D, within(.01D));",
-                        "    assertThat(db).describedAs(\"desc\").isCloseTo(.1D, within(.01D));",
-                        "    assertThat(db).describedAs(\"desc\").isEqualTo(.1D);",
+                        "    assertThat(db).as(\"desc\").isCloseTo(.1D, within(.01D));",
+                        "    assertThat(db).as(\"desc\").isEqualTo(.1D);",
                         "    assertThat(db).isEqualTo(.1D);",
                         "    assertThat(fl).isNotCloseTo(.1f, within(.01f));",
-                        "    assertThat(fl).describedAs(\"desc\").isNotCloseTo(.1f, within(.01f));",
+                        "    assertThat(fl).as(\"desc\").isNotCloseTo(.1f, within(.01f));",
                         "    assertThat(db).isNotCloseTo(.1D, within(.01D));",
-                        "    assertThat(db).describedAs(\"desc\").isNotCloseTo(.1D, within(.01D));",
-                        "    assertThat(db).describedAs(\"desc\").isNotEqualTo(.1D);",
+                        "    assertThat(db).as(\"desc\").isNotCloseTo(.1D, within(.01D));",
+                        "    assertThat(db).as(\"desc\").isNotEqualTo(.1D);",
                         "    assertThat(db).isNotEqualTo(.1D);",
                         "    assertThat(db).isCloseTo(1D, within((double) 1));",
                         "    assertThat(db).isCloseTo((double) 1, within(1D));",
                         "    assertThat(db).isCloseTo(1D, within((double) 1f));",
-                        "    assertThat(db).describedAs(\"desc\").isNotCloseTo((double) 1f, within(1D));",
+                        "    assertThat(db).as(\"desc\").isNotCloseTo((double) 1f, within(1D));",
                         "    assertThat(fl).isCloseTo(1f, within((float) 1));",
                         "    assertThat(fl).isNotCloseTo((float) 1, within(1f));",
                         "  }",
@@ -292,9 +292,9 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(String value) {",
                         "    assertThat(value).isEqualTo(\"1\");",
-                        "    assertThat(value).describedAs(\"desc\").isEqualTo(\"1\");",
+                        "    assertThat(value).as(\"desc\").isEqualTo(\"1\");",
                         "    assertThat(value).isNotEqualTo(\"1\");",
-                        "    assertThat(value).describedAs(\"desc\").isNotEqualTo(\"1\");",
+                        "    assertThat(value).as(\"desc\").isNotEqualTo(\"1\");",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -363,7 +363,7 @@ public class PreferAssertjTests {
                         "import static org.junit.Assert.assertEquals;",
                         "class Test {",
                         "  void foo(int value) {",
-                        "    assertThat(value).describedAs(\"desc\").isEqualTo(1);",
+                        "    assertThat(value).as(\"desc\").isEqualTo(1);",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -409,7 +409,7 @@ public class PreferAssertjTests {
                         "import static org.junit.Assert.assertArrayEquals;",
                         "class Test {",
                         "  void foo(int[] value) {",
-                        "    assertThat(value).describedAs(\"desc\").isEqualTo(new int[] { 1 });",
+                        "    assertThat(value).as(\"desc\").isEqualTo(new int[] { 1 });",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -472,9 +472,9 @@ public class PreferAssertjTests {
                         "import static org.junit.Assert.assertArrayEquals;",
                         "class Test {",
                         "  void foo(float[] floatArray, double[] doubleArray) {",
-                        "    assertThat(floatArray).describedAs(\"desc\").isEqualTo(new float[] { 1f });",
+                        "    assertThat(floatArray).as(\"desc\").isEqualTo(new float[] { 1f });",
                         "    assertThat(floatArray).isEqualTo(new float[] { 1f });",
-                        "    assertThat(doubleArray).describedAs(\"desc\").isEqualTo(new double[] { 1D });",
+                        "    assertThat(doubleArray).as(\"desc\").isEqualTo(new double[] { 1D });",
                         "    assertThat(doubleArray).isEqualTo(new double[] { 1D });",
                         "    assertArrayEquals(\"desc\", new float[] { 1f }, floatArray, .1f);",
                         "    assertArrayEquals(\"desc\", new double[] { 1D }, doubleArray, .1D);",
@@ -504,7 +504,7 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(int value) {",
                         "    assertThat(value).isNotEqualTo(1);",
-                        "    assertThat(value).describedAs(\"desc\").isNotEqualTo(1);",
+                        "    assertThat(value).as(\"desc\").isNotEqualTo(1);",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -530,7 +530,7 @@ public class PreferAssertjTests {
                         "class Test {",
                         "  void foo(int value) {",
                         "    assertThat(value).isEqualTo(1);",
-                        "    assertThat(value).describedAs(\"desc\").isEqualTo(1);",
+                        "    assertThat(value).as(\"desc\").isEqualTo(1);",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -591,10 +591,10 @@ public class PreferAssertjTests {
                         "    assertThat(value).isInstanceOf(String.class);",
                         "    assertThat(value).isNotInstanceOf(String.class);",
                         "    assertThat(value).isNotInstanceOf(String.class);",
-                        "    assertThat(value).describedAs(\"desc\").isInstanceOf(String.class);",
-                        "    assertThat(value).describedAs(\"desc\").isInstanceOf(String.class);",
-                        "    assertThat(value).describedAs(\"desc\").isNotInstanceOf(String.class);",
-                        "    assertThat(value).describedAs(\"desc\").isNotInstanceOf(String.class);",
+                        "    assertThat(value).as(\"desc\").isInstanceOf(String.class);",
+                        "    assertThat(value).as(\"desc\").isInstanceOf(String.class);",
+                        "    assertThat(value).as(\"desc\").isNotInstanceOf(String.class);",
+                        "    assertThat(value).as(\"desc\").isNotInstanceOf(String.class);",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -638,7 +638,7 @@ public class PreferAssertjTests {
                         "    assertThat(value).isNotEqualTo(\"str\");",
                         "    assertThat(value).isNotEqualTo(\"str\");",
                         "    assertThat(value).isNotEqualTo(\"str\");",
-                        "    assertThat(value).describedAs(\"desc\").isNotEqualTo(\"str\");",
+                        "    assertThat(value).as(\"desc\").isNotEqualTo(\"str\");",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -679,12 +679,12 @@ public class PreferAssertjTests {
                         "    assertThat(value).isNull();",
                         "    assertThat(value).isNotNull();",
                         "    assertThat(value).isNotNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNotNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNotNull();",
-                        "    assertThat(value).describedAs(\"desc\").isNotNull();",
+                        "    assertThat(value).as(\"desc\").isNull();",
+                        "    assertThat(value).as(\"desc\").isNotNull();",
+                        "    assertThat(value).as(\"desc\").isNull();",
+                        "    assertThat(value).as(\"desc\").isNull();",
+                        "    assertThat(value).as(\"desc\").isNotNull();",
+                        "    assertThat(value).as(\"desc\").isNotNull();",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
@@ -948,9 +948,9 @@ public class PreferAssertjTests {
                         "  <K, V> void foo(IMap<K, V> expected, IMap<K, V> actual) {",
                         "    assertThat((Map<?, ?>) actual).isEqualTo(expected);",
                         "    assertThat((Map<?, ?>) actual).isEqualTo(expected);",
-                        "    assertThat((Map<?, ?>) actual).describedAs(\"desc\").isEqualTo(expected);",
+                        "    assertThat((Map<?, ?>) actual).as(\"desc\").isEqualTo(expected);",
                         "    assertThat((Map<?, ?>) actual).isNull();",
-                        "    assertThat((Map<?, ?>) actual).describedAs(\"desc\").isNull();",
+                        "    assertThat((Map<?, ?>) actual).as(\"desc\").isNull();",
                         "  }",
                         "}")
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);

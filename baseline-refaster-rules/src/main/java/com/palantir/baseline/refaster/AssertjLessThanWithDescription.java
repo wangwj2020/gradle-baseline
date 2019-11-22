@@ -27,17 +27,17 @@ public final class AssertjLessThanWithDescription {
 
     @BeforeTemplate
     public void before1(int left, int right, String desc) {
-        assertThat(left < right).describedAs(desc).isTrue();
+        assertThat(left < right).as(desc).isTrue();
     }
 
     @BeforeTemplate
     public void before2(int left, int right, String desc) {
-        assertThat(left >= right).describedAs(desc).isFalse();
+        assertThat(left >= right).as(desc).isFalse();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     public void after(int left, int right, String desc) {
-        assertThat(left).describedAs(desc).isLessThan(right);
+        assertThat(left).as(desc).isLessThan(right);
     }
 }

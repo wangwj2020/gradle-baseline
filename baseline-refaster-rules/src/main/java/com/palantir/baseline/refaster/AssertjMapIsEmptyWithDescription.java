@@ -29,32 +29,32 @@ public final class AssertjMapIsEmptyWithDescription<K, V> {
 
     @BeforeTemplate
     void before1(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() == 0).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.size() == 0).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before2(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.isEmpty()).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.isEmpty()).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before3(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isZero();
+        assertThat(things.size()).as(description, descriptionArgs).isZero();
     }
 
     @BeforeTemplate
     void before4(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isEqualTo(0);
+        assertThat(things.size()).as(description, descriptionArgs).isEqualTo(0);
     }
 
     @BeforeTemplate
     void before5(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).hasSize(0);
+        assertThat(things).as(description, descriptionArgs).hasSize(0);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Map<K, V> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isEmpty();
+        assertThat(things).as(description, descriptionArgs).isEmpty();
     }
 }

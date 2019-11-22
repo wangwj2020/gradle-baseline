@@ -29,27 +29,27 @@ public final class AssertjOptionalIsNotPresentWithDescription<T> {
 
     @BeforeTemplate
     void before1(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(thing.isPresent()).describedAs(description, descriptionArgs).isFalse();
+        assertThat(thing.isPresent()).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void before2(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(!thing.isPresent()).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!thing.isPresent()).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before3(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(thing).describedAs(description, descriptionArgs).isEqualTo(Optional.empty());
+        assertThat(thing).as(description, descriptionArgs).isEqualTo(Optional.empty());
     }
 
     @BeforeTemplate
     void before4(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(Optional.empty()).describedAs(description, descriptionArgs).isEqualTo(thing);
+        assertThat(Optional.empty()).as(description, descriptionArgs).isEqualTo(thing);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(thing).describedAs(description, descriptionArgs).isNotPresent();
+        assertThat(thing).as(description, descriptionArgs).isNotPresent();
     }
 }

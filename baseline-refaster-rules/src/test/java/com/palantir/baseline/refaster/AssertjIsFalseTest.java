@@ -35,10 +35,10 @@ public class AssertjIsFalseTest {
                         "    assertThat(bool).isEqualTo(Boolean.FALSE);",
                         "    assertThat(false).isEqualTo(bool);",
                         "    assertThat(Boolean.FALSE).isEqualTo(bool);",
-                        "    assertThat(bool).describedAs(\"desc\").isEqualTo(false);",
-                        "    assertThat(bool).describedAs(\"desc\").isEqualTo(false);",
-                        "    assertThat(false).describedAs(\"desc\").isEqualTo(bool);",
-                        "    assertThat(Boolean.FALSE).describedAs(\"desc\").isEqualTo(bool);",
+                        "    assertThat(bool).as(\"desc\").isEqualTo(false);",
+                        "    assertThat(bool).as(\"desc\").isEqualTo(false);",
+                        "    assertThat(false).as(\"desc\").isEqualTo(bool);",
+                        "    assertThat(Boolean.FALSE).as(\"desc\").isEqualTo(bool);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -49,10 +49,10 @@ public class AssertjIsFalseTest {
                         "    assertThat(bool).isFalse();",
                         "    assertThat(bool).isFalse();",
                         "    assertThat(bool).isFalse();",
-                        "    assertThat(bool).describedAs(\"desc\").isFalse();",
-                        "    assertThat(bool).describedAs(\"desc\").isFalse();",
-                        "    assertThat(bool).describedAs(\"desc\").isFalse();",
-                        "    assertThat(bool).describedAs(\"desc\").isFalse();",
+                        "    assertThat(bool).as(\"desc\").isFalse();",
+                        "    assertThat(bool).as(\"desc\").isFalse();",
+                        "    assertThat(bool).as(\"desc\").isFalse();",
+                        "    assertThat(bool).as(\"desc\").isFalse();",
                         "  }",
                         "}");
     }

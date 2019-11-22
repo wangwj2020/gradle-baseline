@@ -59,10 +59,10 @@ public class AssertjCollectionIsNotEmptyTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in.size() != 0).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.size() == 0).describedAs(\"desc\").isFalse();",
-                        "    assertThat(in.isEmpty()).describedAs(\"desc\").isFalse();",
-                        "    assertThat(!in.isEmpty()).describedAs(\"desc\").isTrue();",
+                        "    assertThat(in.size() != 0).as(\"desc\").isTrue();",
+                        "    assertThat(in.size() == 0).as(\"desc\").isFalse();",
+                        "    assertThat(in.isEmpty()).as(\"desc\").isFalse();",
+                        "    assertThat(!in.isEmpty()).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -70,10 +70,10 @@ public class AssertjCollectionIsNotEmptyTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in).describedAs(\"desc\").isNotEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isNotEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isNotEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isNotEmpty();",
+                        "    assertThat(in).as(\"desc\").isNotEmpty();",
+                        "    assertThat(in).as(\"desc\").isNotEmpty();",
+                        "    assertThat(in).as(\"desc\").isNotEmpty();",
+                        "    assertThat(in).as(\"desc\").isNotEmpty();",
                         "  }",
                         "}");
     }

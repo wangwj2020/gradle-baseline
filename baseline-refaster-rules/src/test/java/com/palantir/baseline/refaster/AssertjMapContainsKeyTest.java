@@ -25,7 +25,7 @@ public class AssertjMapContainsKeyTest {
     @Test
     public void contains_simple() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapContainsKey.class)
@@ -55,7 +55,7 @@ public class AssertjMapContainsKeyTest {
     @Test
     public void contains_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapContainsKeyWithDescription.class)
@@ -65,9 +65,9 @@ public class AssertjMapContainsKeyTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in) {",
-                        "    assertThat(in.keySet().contains(\"foo\")).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.containsKey(\"foo\")).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.get(\"foo\")).describedAs(\"desc\").isNotNull();",
+                        "    assertThat(in.keySet().contains(\"foo\")).as(\"desc\").isTrue();",
+                        "    assertThat(in.containsKey(\"foo\")).as(\"desc\").isTrue();",
+                        "    assertThat(in.get(\"foo\")).as(\"desc\").isNotNull();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -75,9 +75,9 @@ public class AssertjMapContainsKeyTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in) {",
-                        "    assertThat(in).describedAs(\"desc\").containsKey(\"foo\");",
-                        "    assertThat(in).describedAs(\"desc\").containsKey(\"foo\");",
-                        "    assertThat(in).describedAs(\"desc\").containsKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").containsKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").containsKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").containsKey(\"foo\");",
                         "  }",
                         "}");
     }
@@ -85,7 +85,7 @@ public class AssertjMapContainsKeyTest {
     @Test
     public void notContain_simple() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapDoesNotContainKey.class)
@@ -115,7 +115,7 @@ public class AssertjMapContainsKeyTest {
     @Test
     public void notContain_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapDoesNotContainKeyWithDescription.class)
@@ -125,9 +125,9 @@ public class AssertjMapContainsKeyTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in) {",
-                        "    assertThat(in.keySet().contains(\"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(in.containsKey(\"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(in.get(\"foo\")).describedAs(\"desc\").isNull();",
+                        "    assertThat(in.keySet().contains(\"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(in.containsKey(\"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(in.get(\"foo\")).as(\"desc\").isNull();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -135,9 +135,9 @@ public class AssertjMapContainsKeyTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in) {",
-                        "    assertThat(in).describedAs(\"desc\").doesNotContainKey(\"foo\");",
-                        "    assertThat(in).describedAs(\"desc\").doesNotContainKey(\"foo\");",
-                        "    assertThat(in).describedAs(\"desc\").doesNotContainKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").doesNotContainKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").doesNotContainKey(\"foo\");",
+                        "    assertThat(in).as(\"desc\").doesNotContainKey(\"foo\");",
                         "  }",
                         "}");
     }

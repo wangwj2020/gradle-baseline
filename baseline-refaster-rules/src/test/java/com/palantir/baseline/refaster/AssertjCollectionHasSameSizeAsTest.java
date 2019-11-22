@@ -25,7 +25,7 @@ public class AssertjCollectionHasSameSizeAsTest {
     @Test
     public void test() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjCollectionHasSameSizeAs.class)
@@ -39,9 +39,9 @@ public class AssertjCollectionHasSameSizeAsTest {
                         "    assertThat(a).hasSize(target.size());",
                         "    assertThat(b).hasSize(target.size());",
                         "    assertThat(c).hasSize(target.size());",
-                        "    assertThat(a).describedAs(\"desc\").hasSize(target.size());",
-                        "    assertThat(b).describedAs(\"desc\").hasSize(target.size());",
-                        "    assertThat(c).describedAs(\"desc\").hasSize(target.size());",
+                        "    assertThat(a).as(\"desc\").hasSize(target.size());",
+                        "    assertThat(b).as(\"desc\").hasSize(target.size());",
+                        "    assertThat(c).as(\"desc\").hasSize(target.size());",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -53,9 +53,9 @@ public class AssertjCollectionHasSameSizeAsTest {
                         "    assertThat(a).hasSameSizeAs(target);",
                         "    assertThat(b).hasSameSizeAs(target);",
                         "    assertThat(c).hasSameSizeAs(target);",
-                        "    assertThat(a).describedAs(\"desc\").hasSameSizeAs(target);",
-                        "    assertThat(b).describedAs(\"desc\").hasSameSizeAs(target);",
-                        "    assertThat(c).describedAs(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(a).as(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(b).as(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(c).as(\"desc\").hasSameSizeAs(target);",
                         "  }",
                         "}");
     }
@@ -63,7 +63,7 @@ public class AssertjCollectionHasSameSizeAsTest {
     @Test
     public void testArray() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjCollectionHasSameSizeAsArray.class)
@@ -77,10 +77,10 @@ public class AssertjCollectionHasSameSizeAsTest {
                         "    assertThat(a).hasSize(target.length);",
                         "    assertThat(b).hasSize(target.length);",
                         "    assertThat(c).hasSize(target.length);",
-                        "    assertThat(a).describedAs(\"desc\").hasSize(target.length);",
-                        "    assertThat(b).describedAs(\"desc\").hasSize(target.length);",
-                        "    assertThat(c).describedAs(\"desc\").hasSize(target.length);",
-                        "    assertThat(c).describedAs(\"foo %s\", \"bar\").hasSize(target.length);",
+                        "    assertThat(a).as(\"desc\").hasSize(target.length);",
+                        "    assertThat(b).as(\"desc\").hasSize(target.length);",
+                        "    assertThat(c).as(\"desc\").hasSize(target.length);",
+                        "    assertThat(c).as(\"foo %s\", \"bar\").hasSize(target.length);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -92,10 +92,10 @@ public class AssertjCollectionHasSameSizeAsTest {
                         "    assertThat(a).hasSameSizeAs(target);",
                         "    assertThat(b).hasSameSizeAs(target);",
                         "    assertThat(c).hasSameSizeAs(target);",
-                        "    assertThat(a).describedAs(\"desc\").hasSameSizeAs(target);",
-                        "    assertThat(b).describedAs(\"desc\").hasSameSizeAs(target);",
-                        "    assertThat(c).describedAs(\"desc\").hasSameSizeAs(target);",
-                        "    assertThat(c).describedAs(\"foo %s\", \"bar\").hasSameSizeAs(target);",
+                        "    assertThat(a).as(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(b).as(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(c).as(\"desc\").hasSameSizeAs(target);",
+                        "    assertThat(c).as(\"foo %s\", \"bar\").hasSameSizeAs(target);",
                         "  }",
                         "}");
     }

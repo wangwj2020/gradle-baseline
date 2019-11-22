@@ -33,27 +33,27 @@ public final class AssertjNotEqualsWithDescription<T> {
 
     @BeforeTemplate
     void before1(T expected, T actual, String description, @Repeated Object descriptionArgs) {
-        assertThat(!actual.equals(expected)).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!actual.equals(expected)).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before2(T expected, T actual, String description, @Repeated Object descriptionArgs) {
-        assertThat(!Objects.equals(actual, expected)).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!Objects.equals(actual, expected)).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before3(T expected, T actual, String description, @Repeated Object descriptionArgs) {
-        assertThat(actual.equals(expected)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(actual.equals(expected)).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void before4(T expected, T actual, String description, @Repeated Object descriptionArgs) {
-        assertThat(Objects.equals(actual, expected)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(Objects.equals(actual, expected)).as(description, descriptionArgs).isFalse();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(T expected, T actual, String description, @Repeated Object descriptionArgs) {
-        assertThat(actual).describedAs(description, descriptionArgs).isNotEqualTo(expected);
+        assertThat(actual).as(description, descriptionArgs).isNotEqualTo(expected);
     }
 }

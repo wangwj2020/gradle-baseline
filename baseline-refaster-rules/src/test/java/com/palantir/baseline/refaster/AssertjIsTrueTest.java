@@ -35,10 +35,10 @@ public class AssertjIsTrueTest {
                         "    assertThat(bool).isEqualTo(Boolean.TRUE);",
                         "    assertThat(true).isEqualTo(bool);",
                         "    assertThat(Boolean.TRUE).isEqualTo(bool);",
-                        "    assertThat(bool).describedAs(\"desc\").isEqualTo(true);",
-                        "    assertThat(bool).describedAs(\"desc\").isEqualTo(Boolean.TRUE);",
-                        "    assertThat(true).describedAs(\"desc\").isEqualTo(bool);",
-                        "    assertThat(Boolean.TRUE).describedAs(\"desc\").isEqualTo(bool);",
+                        "    assertThat(bool).as(\"desc\").isEqualTo(true);",
+                        "    assertThat(bool).as(\"desc\").isEqualTo(Boolean.TRUE);",
+                        "    assertThat(true).as(\"desc\").isEqualTo(bool);",
+                        "    assertThat(Boolean.TRUE).as(\"desc\").isEqualTo(bool);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -49,10 +49,10 @@ public class AssertjIsTrueTest {
                         "    assertThat(bool).isTrue();",
                         "    assertThat(bool).isTrue();",
                         "    assertThat(bool).isTrue();",
-                        "    assertThat(bool).describedAs(\"desc\").isTrue();",
-                        "    assertThat(bool).describedAs(\"desc\").isTrue();",
-                        "    assertThat(bool).describedAs(\"desc\").isTrue();",
-                        "    assertThat(bool).describedAs(\"desc\").isTrue();",
+                        "    assertThat(bool).as(\"desc\").isTrue();",
+                        "    assertThat(bool).as(\"desc\").isTrue();",
+                        "    assertThat(bool).as(\"desc\").isTrue();",
+                        "    assertThat(bool).as(\"desc\").isTrue();",
                         "  }",
                         "}");
     }

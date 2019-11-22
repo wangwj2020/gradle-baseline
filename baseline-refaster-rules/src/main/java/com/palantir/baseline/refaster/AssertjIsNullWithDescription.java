@@ -29,28 +29,28 @@ public final class AssertjIsNullWithDescription {
 
     @BeforeTemplate
     void before1(Object input, String description, @Repeated Object descriptionArgs) {
-        assertThat(input == null).describedAs(description, descriptionArgs).isTrue();
+        assertThat(input == null).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before2(Object input, String description, @Repeated Object descriptionArgs) {
-        assertThat(input != null).describedAs(description, descriptionArgs).isFalse();
+        assertThat(input != null).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void before3(Object input, String description, @Repeated Object descriptionArgs) {
-        assertThat(Objects.isNull(input)).describedAs(description, descriptionArgs).isTrue();
+        assertThat(Objects.isNull(input)).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void before4(Object input, String description, @Repeated Object descriptionArgs) {
-        assertThat(Objects.nonNull(input)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(Objects.nonNull(input)).as(description, descriptionArgs).isFalse();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Object input, String description, @Repeated Object descriptionArgs) {
-        assertThat(input).describedAs(description, descriptionArgs).isNull();
+        assertThat(input).as(description, descriptionArgs).isNull();
     }
 
 }

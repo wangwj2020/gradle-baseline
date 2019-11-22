@@ -28,17 +28,17 @@ public final class AssertjStringDoesNotContainWithDescription<T> {
 
     @BeforeTemplate
     void before1(String input, CharSequence contains, String description, @Repeated Object descriptionArgs) {
-        assertThat(input.contains(contains)).describedAs(description, descriptionArgs).isFalse();
+        assertThat(input.contains(contains)).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void before2(String input, CharSequence contains, String description, @Repeated Object descriptionArgs) {
-        assertThat(!input.contains(contains)).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!input.contains(contains)).as(description, descriptionArgs).isTrue();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(String input, CharSequence contains, String description, @Repeated Object descriptionArgs) {
-        assertThat(input).describedAs(description, descriptionArgs).doesNotContain(contains);
+        assertThat(input).as(description, descriptionArgs).doesNotContain(contains);
     }
 }

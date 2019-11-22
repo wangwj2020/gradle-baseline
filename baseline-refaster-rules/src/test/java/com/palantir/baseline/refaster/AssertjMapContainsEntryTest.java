@@ -25,7 +25,7 @@ public class AssertjMapContainsEntryTest {
     @Test
     public void simple() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapContainsEntry.class)
@@ -51,7 +51,7 @@ public class AssertjMapContainsEntryTest {
     @Test
     public void description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjMapContainsEntryWithDescription.class)
@@ -61,7 +61,7 @@ public class AssertjMapContainsEntryTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in, String key, Object expected) {",
-                        "    assertThat(in.get(key)).describedAs(\"desc\").isEqualTo(expected);",
+                        "    assertThat(in.get(key)).as(\"desc\").isEqualTo(expected);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -69,7 +69,7 @@ public class AssertjMapContainsEntryTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, Object> in, String key, Object expected) {",
-                        "    assertThat(in).describedAs(\"desc\").containsEntry(key, expected);",
+                        "    assertThat(in).as(\"desc\").containsEntry(key, expected);",
                         "  }",
                         "}");
     }

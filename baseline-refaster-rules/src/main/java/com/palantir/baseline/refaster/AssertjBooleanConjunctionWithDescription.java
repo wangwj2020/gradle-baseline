@@ -28,13 +28,13 @@ public final class AssertjBooleanConjunctionWithDescription {
 
     @BeforeTemplate
     void before(boolean input1, boolean input2, String description, @Repeated Object descriptionArgs) {
-        assertThat(input1 && input2).describedAs(description, descriptionArgs).isTrue();
+        assertThat(input1 && input2).as(description, descriptionArgs).isTrue();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(boolean input1, boolean input2, String description, @Repeated Object descriptionArgs) {
-        assertThat(input1).describedAs(description, descriptionArgs).isTrue();
-        assertThat(input2).describedAs(description, descriptionArgs).isTrue();
+        assertThat(input1).as(description, descriptionArgs).isTrue();
+        assertThat(input2).as(description, descriptionArgs).isTrue();
     }
 }

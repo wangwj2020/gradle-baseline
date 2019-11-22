@@ -29,12 +29,12 @@ public final class AssertjOptionalIsPresentWithDescription<T> {
 
     @BeforeTemplate
     void before(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(thing.isPresent()).describedAs(description, descriptionArgs).isTrue();
+        assertThat(thing.isPresent()).as(description, descriptionArgs).isTrue();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Optional<T> thing, String description, @Repeated Object descriptionArgs) {
-        assertThat(thing).describedAs(description, descriptionArgs).isPresent();
+        assertThat(thing).as(description, descriptionArgs).isPresent();
     }
 }

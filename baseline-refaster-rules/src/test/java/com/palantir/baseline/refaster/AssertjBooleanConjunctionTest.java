@@ -34,7 +34,7 @@ public class AssertjBooleanConjunctionTest {
                         "    assertThat(bool1 && bool2).isTrue();",
                         "  }",
                         "  void g(boolean bool1, boolean bool2) {",
-                        "    assertThat(bool1 && bool2).describedAs(\"desc\").isTrue();",
+                        "    assertThat(bool1 && bool2).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -45,8 +45,8 @@ public class AssertjBooleanConjunctionTest {
                         "assertThat(bool2).isTrue();",
                         "  }",
                         "  void g(boolean bool1, boolean bool2) {",
-                        "    assertThat(bool1).describedAs(\"desc\").isTrue();",
-                        "assertThat(bool2).describedAs(\"desc\").isTrue();",
+                        "    assertThat(bool1).as(\"desc\").isTrue();",
+                        "assertThat(bool2).as(\"desc\").isTrue();",
                         "  }",
                         "}");
     }

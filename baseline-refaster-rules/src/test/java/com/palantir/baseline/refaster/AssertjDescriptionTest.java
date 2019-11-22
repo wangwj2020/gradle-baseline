@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assumptions.assumeThat;
 
 import org.junit.Test;
 
-public class AssertjIsZeroTest {
+public class AssertjDescriptionTest {
 
     @Test
     public void test() {
@@ -28,40 +28,27 @@ public class AssertjIsZeroTest {
                 .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
-                .forRefactoring(AssertjIsZero.class)
+                .forRefactoring(AssertjDescription.class)
                 .withInputLines(
                         "Test",
+                        "import static java.lang.String.format;",
                         "import static org.assertj.core.api.Assertions.assertThat;",
-                        "import java.util.List;",
                         "public class Test {",
-                        "  void f(List<String> in, int i, double d, float f, long l) {",
-                        "    assertThat(in.size()).isEqualTo(0);",
-                        "    assertThat(i).isEqualTo(0);",
-                        "    assertThat(d).isEqualTo(0);",
-                        "    assertThat(d).isEqualTo(0D);",
-                        "    assertThat(d).isEqualTo(0.0D);",
-                        "    assertThat(f).isEqualTo(0);",
-                        "    assertThat(f).isEqualTo(0.0);",
-                        "    assertThat(l).isEqualTo(0);",
-                        "    assertThat(l).isEqualTo(0L);",
+                        "  void f(Object obj) {",
+                        "    assertThat(obj).describedAs(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).isEqualTo(\"foo\");",
+                        "    assertThat(obj).describedAs(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
                         "  }",
                         "}")
                 .hasOutputLines(
+                        "import static java.lang.String.format;",
                         "import static org.assertj.core.api.Assertions.assertThat;",
-                        "import java.util.List;",
                         "public class Test {",
-                        "  void f(List<String> in, int i, double d, float f, long l) {",
-                        "    assertThat(in.size()).isZero();",
-                        "    assertThat(i).isZero();",
-                        "    assertThat(d).isZero();",
-                        "    assertThat(d).isZero();",
-                        "    assertThat(d).isZero();",
-                        "    assertThat(f).isZero();",
-                        "    assertThat(f).isZero();",
-                        "    assertThat(l).isZero();",
-                        "    assertThat(l).isZero();",
+                        "  void f(Object obj) {",
+                        "    assertThat(obj).as(\"desc\").isEqualTo(\"foo\");",
+                        "    assertThat(obj).isEqualTo(\"foo\");",
+                        "    assertThat(obj).as(\"desc %s\", \"arg\").isEqualTo(\"foo\");",
                         "  }",
                         "}");
     }
-
 }

@@ -29,17 +29,17 @@ public final class AssertjCollectionHasSizeExactlyWithDescription<T> {
 
     @BeforeTemplate
     void bad1(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() == size).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.size() == size).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void bad2(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isEqualTo(size);
+        assertThat(things.size()).as(description, descriptionArgs).isEqualTo(size);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Collection<T> things, int size, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).hasSize(size);
+        assertThat(things).as(description, descriptionArgs).hasSize(size);
     }
 }

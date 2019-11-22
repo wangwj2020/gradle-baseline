@@ -52,16 +52,16 @@ public class AssertjStringContentTest {
                         "import static org.assertj.core.api.Assertions.assertThat;",
                         "public class Test {",
                         "  void f(String str) {",
-                        "    assertThat(str.contains(\"foo\")).describedAs(\"desc\").isTrue();",
-                        "    assertThat(!str.contains(\"foo\")).describedAs(\"desc\").isFalse();",
+                        "    assertThat(str.contains(\"foo\")).as(\"desc\").isTrue();",
+                        "    assertThat(!str.contains(\"foo\")).as(\"desc\").isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
                         "import static org.assertj.core.api.Assertions.assertThat;",
                         "public class Test {",
                         "  void f(String str) {",
-                        "    assertThat(str).describedAs(\"desc\").contains(\"foo\");",
-                        "    assertThat(str).describedAs(\"desc\").contains(\"foo\");",
+                        "    assertThat(str).as(\"desc\").contains(\"foo\");",
+                        "    assertThat(str).as(\"desc\").contains(\"foo\");",
                         "  }",
                         "}");
     }
@@ -98,16 +98,16 @@ public class AssertjStringContentTest {
                         "import static org.assertj.core.api.Assertions.assertThat;",
                         "public class Test {",
                         "  void f(String str) {",
-                        "    assertThat(str.contains(\"foo\")).describedAs(\"desc\").isFalse();",
-                        "    assertThat(!str.contains(\"foo\")).describedAs(\"desc\").isTrue();",
+                        "    assertThat(str.contains(\"foo\")).as(\"desc\").isFalse();",
+                        "    assertThat(!str.contains(\"foo\")).as(\"desc\").isTrue();",
                         "  }",
                         "}")
                 .hasOutputLines(
                         "import static org.assertj.core.api.Assertions.assertThat;",
                         "public class Test {",
                         "  void f(String str) {",
-                        "    assertThat(str).describedAs(\"desc\").doesNotContain(\"foo\");",
-                        "    assertThat(str).describedAs(\"desc\").doesNotContain(\"foo\");",
+                        "    assertThat(str).as(\"desc\").doesNotContain(\"foo\");",
+                        "    assertThat(str).as(\"desc\").doesNotContain(\"foo\");",
                         "  }",
                         "}");
     }

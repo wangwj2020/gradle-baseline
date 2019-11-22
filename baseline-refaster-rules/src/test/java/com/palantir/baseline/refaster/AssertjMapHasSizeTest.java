@@ -57,8 +57,8 @@ public class AssertjMapHasSizeTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, String> in) {",
-                        "    assertThat(in.size() == 2).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.size()).describedAs(\"desc\").isEqualTo(2);",
+                        "    assertThat(in.size() == 2).as(\"desc\").isTrue();",
+                        "    assertThat(in.size()).as(\"desc\").isEqualTo(2);",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -68,8 +68,8 @@ public class AssertjMapHasSizeTest {
                         "import java.util.Map;",
                         "public class Test {",
                         "  void f(Map<String, String> in) {",
-                        "    assertThat(in).describedAs(\"desc\").hasSize(2);",
-                        "    assertThat(in).describedAs(\"desc\").hasSize(2);",
+                        "    assertThat(in).as(\"desc\").hasSize(2);",
+                        "    assertThat(in).as(\"desc\").hasSize(2);",
                         "  }",
                         "}");
     }

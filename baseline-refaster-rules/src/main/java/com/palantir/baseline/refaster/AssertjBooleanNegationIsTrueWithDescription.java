@@ -28,12 +28,12 @@ public final class AssertjBooleanNegationIsTrueWithDescription {
 
     @BeforeTemplate
     void before(boolean input, String description, @Repeated Object descriptionArgs) {
-        assertThat(!input).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!input).as(description, descriptionArgs).isTrue();
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(boolean input, String description, @Repeated Object descriptionArgs) {
-        assertThat(input).describedAs(description, descriptionArgs).isFalse();
+        assertThat(input).as(description, descriptionArgs).isFalse();
     }
 }

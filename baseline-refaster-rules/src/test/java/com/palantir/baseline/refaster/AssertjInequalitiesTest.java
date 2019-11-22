@@ -25,7 +25,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void less_than() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjLessThan.class)
@@ -53,7 +53,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void less_than_with_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjLessThanWithDescription.class)
@@ -63,8 +63,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a < b).describedAs(desc).isTrue();",
-                        "    assertThat(a >= b).describedAs(desc).isFalse();",
+                        "    assertThat(a < b).as(desc).isTrue();",
+                        "    assertThat(a >= b).as(desc).isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -72,8 +72,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a).describedAs(desc).isLessThan(b);",
-                        "    assertThat(a).describedAs(desc).isLessThan(b);",
+                        "    assertThat(a).as(desc).isLessThan(b);",
+                        "    assertThat(a).as(desc).isLessThan(b);",
                         "  }",
                         "}");
     }
@@ -81,7 +81,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void greater_than() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjGreaterThan.class)
@@ -109,7 +109,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void greater_than_with_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjGreaterThanWithDescription.class)
@@ -119,8 +119,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a > b).describedAs(desc).isTrue();",
-                        "    assertThat(a <= b).describedAs(desc).isFalse();",
+                        "    assertThat(a > b).as(desc).isTrue();",
+                        "    assertThat(a <= b).as(desc).isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -128,8 +128,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a).describedAs(desc).isGreaterThan(b);",
-                        "    assertThat(a).describedAs(desc).isGreaterThan(b);",
+                        "    assertThat(a).as(desc).isGreaterThan(b);",
+                        "    assertThat(a).as(desc).isGreaterThan(b);",
                         "  }",
                         "}");
     }
@@ -137,7 +137,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void less_than_or_equal_to() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjLessThanOrEqualTo.class)
@@ -165,7 +165,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void less_than_or_equal_to_with_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjLessThanOrEqualToWithDescription.class)
@@ -175,8 +175,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a <= b).describedAs(desc).isTrue();",
-                        "    assertThat(a > b).describedAs(desc).isFalse();",
+                        "    assertThat(a <= b).as(desc).isTrue();",
+                        "    assertThat(a > b).as(desc).isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -184,8 +184,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a).describedAs(desc).isLessThanOrEqualTo(b);",
-                        "    assertThat(a).describedAs(desc).isLessThanOrEqualTo(b);",
+                        "    assertThat(a).as(desc).isLessThanOrEqualTo(b);",
+                        "    assertThat(a).as(desc).isLessThanOrEqualTo(b);",
                         "  }",
                         "}");
     }
@@ -193,7 +193,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void greater_than_or_equal_to() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjGreaterThanOrEqualTo.class)
@@ -221,7 +221,7 @@ public class AssertjInequalitiesTest {
     @Test
     public void greater_than_or_equal_to_with_description() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjGreaterThanOrEqualToWithDescription.class)
@@ -231,8 +231,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a >= b).describedAs(desc).isTrue();",
-                        "    assertThat(a < b).describedAs(desc).isFalse();",
+                        "    assertThat(a >= b).as(desc).isTrue();",
+                        "    assertThat(a < b).as(desc).isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -240,8 +240,8 @@ public class AssertjInequalitiesTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void test(int a, int b, String desc) {",
-                        "    assertThat(a).describedAs(desc).isGreaterThanOrEqualTo(b);",
-                        "    assertThat(a).describedAs(desc).isGreaterThanOrEqualTo(b);",
+                        "    assertThat(a).as(desc).isGreaterThanOrEqualTo(b);",
+                        "    assertThat(a).as(desc).isGreaterThanOrEqualTo(b);",
                         "  }",
                         "}");
     }

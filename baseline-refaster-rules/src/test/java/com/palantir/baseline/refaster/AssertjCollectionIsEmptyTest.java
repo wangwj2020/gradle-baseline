@@ -61,10 +61,10 @@ public class AssertjCollectionIsEmptyTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in.size() == 0).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.isEmpty()).describedAs(\"desc\").isTrue();",
-                        "    assertThat(in.size()).describedAs(\"desc\").isEqualTo(0);",
-                        "    assertThat(in.size()).describedAs(\"desc\").isZero();",
+                        "    assertThat(in.size() == 0).as(\"desc\").isTrue();",
+                        "    assertThat(in.isEmpty()).as(\"desc\").isTrue();",
+                        "    assertThat(in.size()).as(\"desc\").isEqualTo(0);",
+                        "    assertThat(in.size()).as(\"desc\").isZero();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -72,10 +72,10 @@ public class AssertjCollectionIsEmptyTest {
                         "import java.util.List;",
                         "public class Test {",
                         "  void f(List<String> in) {",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
                         "  }",
                         "}");
     }
@@ -83,7 +83,7 @@ public class AssertjCollectionIsEmptyTest {
     @Test
     public void test2() {
         assumeThat(System.getProperty("java.specification.version"))
-                .describedAs("Refaster does not currently support fluent refactors on java 11")
+                .as("Refaster does not currently support fluent refactors on java 11")
                 .isEqualTo("1.8");
         RefasterTestHelper
                 .forRefactoring(AssertjCollectionIsEmpty2.class)
@@ -98,9 +98,9 @@ public class AssertjCollectionIsEmptyTest {
                         "    assertThat(in).hasSize(0);",
                         "    assertThat(in).isEqualTo(ImmutableList.of());",
                         "    assertThat(in).isEqualTo(Collections.emptyList());",
-                        "    assertThat(in).describedAs(\"desc\").hasSize(0);",
-                        "    assertThat(in).describedAs(\"desc\").isEqualTo(ImmutableList.of());",
-                        "    assertThat(in).describedAs(\"desc\").isEqualTo(Collections.emptyList());",
+                        "    assertThat(in).as(\"desc\").hasSize(0);",
+                        "    assertThat(in).as(\"desc\").isEqualTo(ImmutableList.of());",
+                        "    assertThat(in).as(\"desc\").isEqualTo(Collections.emptyList());",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -113,9 +113,9 @@ public class AssertjCollectionIsEmptyTest {
                         "    assertThat(in).isEmpty();",
                         "    assertThat(in).isEmpty();",
                         "    assertThat(in).isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
-                        "    assertThat(in).describedAs(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
+                        "    assertThat(in).as(\"desc\").isEmpty();",
                         "  }",
                         "}");
     }

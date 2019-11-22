@@ -28,27 +28,27 @@ public final class AssertjIsFalseWithDescription {
 
     @BeforeTemplate
     void before(boolean bool, String description, @Repeated Object descriptionArgs) {
-        assertThat(bool).describedAs(description, descriptionArgs).isEqualTo(false);
+        assertThat(bool).as(description, descriptionArgs).isEqualTo(false);
     }
 
     @BeforeTemplate
     void before2(boolean bool, String description, @Repeated Object descriptionArgs) {
-        assertThat(false).describedAs(description, descriptionArgs).isEqualTo(bool);
+        assertThat(false).as(description, descriptionArgs).isEqualTo(bool);
     }
 
     @BeforeTemplate
     void before3(boolean bool, String description, @Repeated Object descriptionArgs) {
-        assertThat(bool).describedAs(description, descriptionArgs).isEqualTo(Boolean.FALSE);
+        assertThat(bool).as(description, descriptionArgs).isEqualTo(Boolean.FALSE);
     }
 
     @BeforeTemplate
     void before4(boolean bool, String description, @Repeated Object descriptionArgs) {
-        assertThat(Boolean.FALSE).describedAs(description, descriptionArgs).isEqualTo(bool);
+        assertThat(Boolean.FALSE).as(description, descriptionArgs).isEqualTo(bool);
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(boolean bool, String description, @Repeated Object descriptionArgs) {
-        assertThat(bool).describedAs(description, descriptionArgs).isFalse();
+        assertThat(bool).as(description, descriptionArgs).isFalse();
     }
 }

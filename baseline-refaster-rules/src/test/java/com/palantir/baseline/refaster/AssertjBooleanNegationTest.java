@@ -38,10 +38,10 @@ public class AssertjBooleanNegationTest {
                         "    assertThat(!a.equals(b)).isTrue();",
                         "    assertThat(!bool).isFalse();",
                         "    assertThat(!a.equals(b)).isFalse();",
-                        "    assertThat(!bool).describedAs(\"desc\").isTrue();",
-                        "    assertThat(!a.equals(b)).describedAs(\"desc\").isTrue();",
-                        "    assertThat(!bool).describedAs(\"desc\").isFalse();",
-                        "    assertThat(!a.equals(b)).describedAs(\"desc\").isFalse();",
+                        "    assertThat(!bool).as(\"desc\").isTrue();",
+                        "    assertThat(!a.equals(b)).as(\"desc\").isTrue();",
+                        "    assertThat(!bool).as(\"desc\").isFalse();",
+                        "    assertThat(!a.equals(b)).as(\"desc\").isFalse();",
                         "  }",
                         "}")
                 .hasOutputLines(
@@ -52,10 +52,10 @@ public class AssertjBooleanNegationTest {
                         "    assertThat(a.equals(b)).isFalse();",
                         "    assertThat(bool).isTrue();",
                         "    assertThat(a.equals(b)).isTrue();",
-                        "    assertThat(bool).describedAs(\"desc\").isFalse();",
-                        "    assertThat(a.equals(b)).describedAs(\"desc\").isFalse();",
-                        "    assertThat(bool).describedAs(\"desc\").isTrue();",
-                        "    assertThat(a.equals(b)).describedAs(\"desc\").isTrue();",
+                        "    assertThat(bool).as(\"desc\").isFalse();",
+                        "    assertThat(a.equals(b)).as(\"desc\").isFalse();",
+                        "    assertThat(bool).as(\"desc\").isTrue();",
+                        "    assertThat(a.equals(b)).as(\"desc\").isTrue();",
                         "  }",
                         "}");
     }

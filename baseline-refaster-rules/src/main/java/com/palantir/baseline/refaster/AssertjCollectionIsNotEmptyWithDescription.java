@@ -32,52 +32,52 @@ public final class AssertjCollectionIsNotEmptyWithDescription<T> {
 
     @BeforeTemplate
     void bad1(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() != 0).describedAs(description, descriptionArgs).isTrue();
+        assertThat(things.size() != 0).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void bad2(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size() == 0).describedAs(description, descriptionArgs).isFalse();
+        assertThat(things.size() == 0).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void bad3(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.size()).describedAs(description, descriptionArgs).isNotEqualTo(0);
+        assertThat(things.size()).as(description, descriptionArgs).isNotEqualTo(0);
     }
 
     @BeforeTemplate
     void bad4(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things.isEmpty()).describedAs(description, descriptionArgs).isFalse();
+        assertThat(things.isEmpty()).as(description, descriptionArgs).isFalse();
     }
 
     @BeforeTemplate
     void bad5(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(!things.isEmpty()).describedAs(description, descriptionArgs).isTrue();
+        assertThat(!things.isEmpty()).as(description, descriptionArgs).isTrue();
     }
 
     @BeforeTemplate
     void bad6(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isNotEqualTo(Collections.emptyList());
+        assertThat(things).as(description, descriptionArgs).isNotEqualTo(Collections.emptyList());
     }
 
     @BeforeTemplate
     void bad7(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isNotEqualTo(Collections.emptySet());
+        assertThat(things).as(description, descriptionArgs).isNotEqualTo(Collections.emptySet());
     }
 
     @BeforeTemplate
     void bad8(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isNotEqualTo(ImmutableList.of());
+        assertThat(things).as(description, descriptionArgs).isNotEqualTo(ImmutableList.of());
     }
 
     @BeforeTemplate
     void bad9(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isNotEqualTo(ImmutableSet.of());
+        assertThat(things).as(description, descriptionArgs).isNotEqualTo(ImmutableSet.of());
     }
 
     @AfterTemplate
     @UseImportPolicy(ImportPolicy.STATIC_IMPORT_ALWAYS)
     void after(Collection<T> things, String description, @Repeated Object descriptionArgs) {
-        assertThat(things).describedAs(description, descriptionArgs).isNotEmpty();
+        assertThat(things).as(description, descriptionArgs).isNotEmpty();
     }
 }
