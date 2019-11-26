@@ -183,6 +183,7 @@ Safe Logging can be found at [github.com/palantir/safe-logging](https://github.c
 - `StreamOfEmpty`: Stream.of() should be replaced with Stream.empty() to avoid unnecessary varargs allocation.
 - `RedundantMethodReference`: Redundant method reference to the same type.
 - `ExceptionSpecificity`: Prefer more specific catch types than Exception and Throwable.
+- `HandleInterruption`: InterruptedException must be handled.
 
 ### Programmatic Application
 

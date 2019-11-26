@@ -41,7 +41,6 @@ import com.sun.source.tree.Tree;
 import com.sun.source.tree.TryTree;
 import com.sun.source.util.SimpleTreeVisitor;
 import com.sun.source.util.TreeScanner;
-import com.sun.tools.javac.code.Symbol;
 import com.sun.tools.javac.code.Type;
 import com.sun.tools.javac.tree.JCTree;
 import java.util.ArrayList;
@@ -145,31 +144,8 @@ public final class ExceptionSpecificity extends BugChecker implements BugChecker
     }
 
     private static boolean throwsCheckedExceptions(TryTree tree, VisitorState state) {
-        return throwsCheckedExceptions(tree.getBlock(), state)
-                || tree.getResources().stream().anyMatch(resource -> resourceThrowsCheckedExceptions(resource, state));
-    }
-
-    private static boolean throwsCheckedExceptions(Tree tree, VisitorState state) {
-        return MoreASTHelpers.getThrownExceptions(tree, state).stream()
+        return MoreASTHelpers.getThrownExceptionsFromTryBody(tree, state).stream()
                 .anyMatch(type -> MoreASTHelpers.isCheckedException(type, state));
-    }
-
-    private static boolean resourceThrowsCheckedExceptions(Tree resource, VisitorState state) {
-        if (throwsCheckedExceptions(resource, state)) {
-            return true;
-        }
-        Type resourceType = ASTHelpers.getType(resource);
-        if (resourceType == null) {
-            return false;
-        }
-        Symbol.TypeSymbol symbol = resourceType.tsym;
-        if (symbol instanceof Symbol.ClassSymbol) {
-            return MoreASTHelpers.getCloseMethod((Symbol.ClassSymbol) symbol, state)
-                    .map(Symbol.MethodSymbol::getThrownTypes).map(types -> types.stream()
-                            .anyMatch(type -> MoreASTHelpers.isCheckedException(type, state)))
-                    .orElse(false);
-        }
-        return false;
     }
 
     private static final class ImpossibleConditionScanner extends TreeScanner<Void, VisitorState> {
