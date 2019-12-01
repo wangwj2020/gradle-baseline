@@ -493,6 +493,80 @@ class ExceptionSpecificityTest {
                 .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
     }
 
+    @Test
+    void typeParameterException() {
+        fix()
+                .addInputLines("Test.java",
+                        "class Test {",
+                        "  <T extends Exception> void f(ThrowingRunnable<T> in) {",
+                        "    try {",
+                        "        in.run();",
+                        "    } catch (Exception e) {",
+                        "        System.out.println(\"foo\");",
+                        "    }",
+                        "  }",
+                        "  interface ThrowingRunnable<T extends Exception> {",
+                        "    void run() throws T;",
+                        "  }",
+                        "}")
+                .expectUnchanged()
+                .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
+    }
+
+    @Test
+    void typeParameterExceptionToRuntimeException() {
+        fix()
+                .addInputLines("Test.java",
+                        "class Test {",
+                        "  <T extends RuntimeException> void f(ThrowingRunnable<T> in) {",
+                        "    try {",
+                        "        in.run();",
+                        "    } catch (Exception e) {",
+                        "        System.out.println(\"foo\");",
+                        "    }",
+                        "  }",
+                        "  interface ThrowingRunnable<T extends Exception> {",
+                        "    void run() throws T;",
+                        "  }",
+                        "}")
+                .expectUnchanged()
+                .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
+    }
+
+    @Test
+    void typeParameterIoException() {
+        fix()
+                .addInputLines("Test.java",
+                        "import java.io.*;",
+                        "class Test {",
+                        "  <T extends IOException> void f(ThrowingRunnable<T> in) {",
+                        "    try {",
+                        "        in.run();",
+                        "    } catch (Exception e) {",
+                        "        System.out.println(\"foo\");",
+                        "    }",
+                        "  }",
+                        "  interface ThrowingRunnable<T extends IOException> {",
+                        "    void run() throws T;",
+                        "  }",
+                        "}")
+                .addOutputLines("Test.java",
+                        "import java.io.*;",
+                        "class Test {",
+                        "  <T extends IOException> void f(ThrowingRunnable<T> in) {",
+                        "    try {",
+                        "        in.run();",
+                        "    } catch (IOException | RuntimeException e) {",
+                        "        System.out.println(\"foo\");",
+                        "    }",
+                        "  }",
+                        "  interface ThrowingRunnable<T extends IOException> {",
+                        "    void run() throws T;",
+                        "  }",
+                        "}")
+                .doTest(BugCheckerRefactoringTestHelper.TestMode.TEXT_MATCH);
+    }
+
     private RefactoringValidator fix() {
         return RefactoringValidator.of(new ExceptionSpecificity(), getClass());
     }

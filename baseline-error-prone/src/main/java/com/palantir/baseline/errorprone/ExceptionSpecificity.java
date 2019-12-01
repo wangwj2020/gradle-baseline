@@ -99,11 +99,12 @@ public final class ExceptionSpecificity extends BugChecker implements BugChecker
                 // 1. Checked exceptions include neither Exception nor Throwable.
                 // 2. We have implemented deduplication e.g. [IOException, FileNotFoundException] -> [IOException].
                 // 3. There are fewer than some threshold of checked exceptions, perhaps three.
-                ImmutableSet<Type> thrownCheckedExceptions = getThrownCheckedExceptions(tree, state);
+                ImmutableSet<Type> thrownCheckedExceptions = normalizeExceptions(
+                        getThrownCheckedExceptions(tree, state), state);
                 if (containsBroadException(thrownCheckedExceptions, state)) {
                     return Description.NO_MATCH;
                 }
-                ImmutableSet<Type> thrown = normalizeExceptions(thrownCheckedExceptions, state);
+                ImmutableSet<Type> thrown = flattenExceptionTypes(thrownCheckedExceptions, state);
                 // Maximum of three checked exception types to avoid unreadable long catch statements.
                 if (thrown.size() <= 3
                         // Do not apply this to test code where it's likely to be noisy.
@@ -167,15 +168,20 @@ public final class ExceptionSpecificity extends BugChecker implements BugChecker
         return exceptions.contains(state.getTypeFromString(Exception.class.getName()))
                 || exceptions.contains(state.getTypeFromString(Throwable.class.getName()));
     }
+
     /** Removes any exception type that is a subtype of another type in the set. */
     private static ImmutableSet<Type> normalizeExceptions(ImmutableSet<Type> types, VisitorState state) {
-        return flattenExceptionTypes(types.stream()
+        return types.stream()
                 .map(type -> normalizeAnonymousType(type, state))
-                .collect(ImmutableList.toImmutableList()), state);
+                .collect(ImmutableSet.toImmutableSet());
     }
 
     /** Anonymous types cannot be referenced directly, so we must use the supertype. */
     private static Type normalizeAnonymousType(Type input, VisitorState state) {
+        Type upperBound = input.getUpperBound();
+        if (upperBound != null) {
+            return normalizeAnonymousType(upperBound, state);
+        }
         if (input.tsym.isAnonymous()) {
             return normalizeAnonymousType(state.getTypes().supertype(input), state);
         }
