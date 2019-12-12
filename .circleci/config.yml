@@ -129,8 +129,8 @@ jobs:
     steps:
       - run: |
           New-Item -ItemType "directory" -Path "C:\Users\circleci\junit", "C:\Users\circleci\artifacts"
-          choco install zulu11
-          $Env:JAVA_HOME = "C:\Program Files\Zulu\zulu-11"
+          choco install zulu8
+          $Env:JAVA_HOME = "C:\Program Files\Zulu\zulu-8"
           echo $Env:JAVA_HOME
       - checkout
       - restore_cache: { key: 'windows-gradle-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
