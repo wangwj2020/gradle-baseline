@@ -36,7 +36,7 @@ import org.apache.maven.shared.dependency.analyzer.asm.ASMDependencyAnalyzer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
+import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedDependency;
 import org.gradle.api.artifacts.component.ComponentIdentifier;
@@ -103,11 +103,15 @@ public final class BaselineExactDependencies implements Plugin<Project> {
     }
 
     public static String asString(ResolvedArtifact artifact) {
-        ModuleVersionIdentifier moduleVersionId = artifact.getModuleVersion().getId();
-        StringBuilder builder = new StringBuilder()
-                .append(moduleVersionId.getGroup())
-                .append(":")
-                .append(moduleVersionId.getName());
+        StringBuilder builder = new StringBuilder().append(artifact.getName());
+        if (artifact.getClassifier() != null) {
+            builder.append("::").append(artifact.getClassifier());
+        }
+        return builder.toString();
+    }
+
+    public static String asString(PublishArtifact artifact) {
+        StringBuilder builder = new StringBuilder().append(artifact.getName());
         if (artifact.getClassifier() != null) {
             builder.append("::").append(artifact.getClassifier());
         }
