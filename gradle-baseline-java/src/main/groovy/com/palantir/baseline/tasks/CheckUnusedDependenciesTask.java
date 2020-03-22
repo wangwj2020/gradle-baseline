@@ -21,6 +21,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Streams;
 import com.palantir.baseline.plugins.BaselineExactDependencies;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +76,8 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                         BaselineExactDependencies.VALID_ARTIFACT_EXTENSIONS.contains(dependency.getExtension()))
                 .collect(Collectors.toSet());
 
+        printArtifacts("DECLARED", declaredArtifacts);
+
         excludeSourceOnlyDependencies();
 
         Set<ResolvedArtifact> necessaryArtifacts = Streams.stream(
@@ -85,7 +88,12 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                 .map(Optional::get)
                 .collect(Collectors.toSet());
 
+        printArtifacts("NECESSARY", declaredArtifacts);
+
         Set<ResolvedArtifact> possiblyUnused = Sets.difference(declaredArtifacts, necessaryArtifacts);
+
+        printArtifacts("UNUSED", possiblyUnused);
+
         getLogger()
                 .debug(
                         "Possibly unused dependencies: {}",
@@ -226,5 +234,13 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
     @Input
     public final Provider<Set<String>> getIgnored() {
         return ignore;
+    }
+
+    private void printArtifacts(String name, Collection<ResolvedArtifact> artifacts) {
+        getLogger()
+                .lifecycle(
+                        name + " (" + artifacts.size() + ") - " + getProject().getDisplayName());
+        artifacts.stream().map(a -> a.getId().getDisplayName()).sorted().forEach(getLogger()::lifecycle);
+        getLogger().lifecycle("");
     }
 }
