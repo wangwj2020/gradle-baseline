@@ -114,7 +114,8 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                     declaredButUnused.size(), buildFile()));
             for (ResolvedArtifact resolvedArtifact : declaredButUnused) {
                 builder.append('\t')
-                        .append(BaselineExactDependencies.asDependencyStringWithName(resolvedArtifact))
+                        .append(resolvedArtifact.getId().getDisplayName() + " "
+                                + resolvedArtifact.getId().getClass().getName())
                         .append('\n');
 
                 // Suggest fixes by looking at all transitive classes, filtering the ones we have declarations on,
@@ -135,7 +136,8 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
                 if (!didYouMean.isEmpty()) {
                     builder.append("\t\tDid you mean:\n");
                     didYouMean.stream()
-                            .map(BaselineExactDependencies::asDependencyStringWithoutName)
+                            .map(a -> a.getId().getDisplayName() + " "
+                                    + a.getId().getClass().getName())
                             .sorted()
                             .forEach(dependencyString -> builder.append("\t\t\t")
                                     .append(dependencyString)
@@ -237,10 +239,10 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
     }
 
     private void printArtifacts(String name, Collection<ResolvedArtifact> artifacts) {
-        getLogger()
-                .lifecycle(
-                        name + " (" + artifacts.size() + ") - " + getProject().getDisplayName());
-        artifacts.stream().map(a -> a.getId().getDisplayName()).sorted().forEach(getLogger()::lifecycle);
-        getLogger().lifecycle("");
+        // getLogger()
+        //         .lifecycle(
+        //                 name + " (" + artifacts.size() + ") - " + getProject().getDisplayName());
+        // artifacts.stream().map(a -> a.getId().getDisplayName()).sorted().forEach(getLogger()::lifecycle);
+        // getLogger().lifecycle("");
     }
 }
