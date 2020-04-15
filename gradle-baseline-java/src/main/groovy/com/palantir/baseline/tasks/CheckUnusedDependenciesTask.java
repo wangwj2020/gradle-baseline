@@ -64,11 +64,17 @@ public class CheckUnusedDependenciesTask extends DefaultTask {
 
     @TaskAction
     public final void checkUnusedDependencies() {
+        for (Configuration configuration : dependenciesConfigurations.get()) {
+            BaselineExactDependencies.INDEXES.populateIndexes(
+                    getLogger(),
+                    configuration.getName(),
+                    configuration.getResolvedConfiguration().getFirstLevelModuleDependencies());
+        }
+
         Set<ResolvedDependency> declaredDependencies = dependenciesConfigurations.get().stream()
                 .map(Configuration::getResolvedConfiguration)
                 .flatMap(resolved -> resolved.getFirstLevelModuleDependencies().stream())
                 .collect(Collectors.toSet());
-        BaselineExactDependencies.INDEXES.populateIndexes(declaredDependencies);
 
         Set<ResolvedArtifact> declaredArtifacts = declaredDependencies.stream()
                 .flatMap(dependency -> dependency.getModuleArtifacts().stream())

@@ -49,6 +49,7 @@ import org.gradle.api.artifacts.component.ComponentIdentifier;
 import org.gradle.api.artifacts.component.ProjectComponentIdentifier;
 import org.gradle.api.attributes.Attribute;
 import org.gradle.api.attributes.Usage;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskProvider;
@@ -253,7 +254,7 @@ public final class BaselineExactDependencies implements Plugin<Project> {
         private final Map<ResolvedArtifact, Set<String>> classesFromArtifact = new ConcurrentHashMap<>();
         private final Map<ResolvedArtifact, ResolvedDependency> artifactsFromDependency = new ConcurrentHashMap<>();
 
-        public void populateIndexes(Set<ResolvedDependency> declaredDependencies) {
+        public void populateIndexes(Logger logger, String origin, Set<ResolvedDependency> declaredDependencies) {
             Set<ResolvedArtifact> allArtifacts = declaredDependencies.stream()
                     .flatMap(dependency -> dependency.getAllModuleArtifacts().stream())
                     .filter(dependency -> VALID_ARTIFACT_EXTENSIONS.contains(dependency.getExtension()))
@@ -264,6 +265,9 @@ public final class BaselineExactDependencies implements Plugin<Project> {
                     File jar = artifact.getFile();
                     Set<String> classesInArtifact =
                             JAR_ANALYZER.analyze(jar.toURI().toURL());
+                    if (artifact.toString().contains("caff")) {
+                        logger.lifecycle("ARTIFACT: " + artifact.getId().getDisplayName() + " from " + origin);
+                    }
                     classesFromArtifact.put(artifact, classesInArtifact);
                     classesInArtifact.forEach(clazz -> classToDependency.put(clazz, artifact));
                 } catch (IOException e) {
@@ -271,9 +275,14 @@ public final class BaselineExactDependencies implements Plugin<Project> {
                 }
             });
 
-            declaredDependencies.forEach(dependency -> dependency
-                    .getModuleArtifacts()
-                    .forEach(artifact -> artifactsFromDependency.put(artifact, dependency)));
+            declaredDependencies.forEach(
+                    dependency -> dependency.getModuleArtifacts().forEach(artifact -> {
+                        if (artifact.toString().contains("caff")) {
+                            logger.lifecycle("DEPENDENCY: " + artifact.getId().getDisplayName() + " from dep "
+                                    + dependency.toString());
+                        }
+                        artifactsFromDependency.put(artifact, dependency);
+                    }));
         }
 
         /** Given a class, what dependency brought it in. */

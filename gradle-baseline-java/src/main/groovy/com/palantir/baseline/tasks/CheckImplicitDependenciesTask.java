@@ -64,7 +64,7 @@ public class CheckImplicitDependenciesTask extends DefaultTask {
                 .map(Configuration::getResolvedConfiguration)
                 .flatMap(resolved -> resolved.getFirstLevelModuleDependencies().stream())
                 .collect(Collectors.toSet());
-        BaselineExactDependencies.INDEXES.populateIndexes(declaredDependencies);
+        BaselineExactDependencies.INDEXES.populateIndexes(getLogger(), "", declaredDependencies);
 
         Set<ResolvedArtifact> necessaryArtifacts = referencedClasses().stream()
                 .map(BaselineExactDependencies.INDEXES::classToDependency)
